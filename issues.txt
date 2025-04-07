@@ -1,0 +1,7 @@
+ISSUES
+
+06/02/2022
+	[F6] withdrawal charge
+	- check claim slip ga double
+	- ang ga print na withdrawal indi latest
+	- if fully served wala ga gwa ang Withdrawal Slip
