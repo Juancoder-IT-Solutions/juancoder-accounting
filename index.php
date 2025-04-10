@@ -146,95 +146,58 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
 
       function AuthBranch() {
         var branch_id = $("#branch_id").val();
-        $.ajax({
-          type: "POST",
-          url: "controllers/sql.php?c=Branches&q=session_branch",
-          data: {
-            input: {
-              branch_id: branch_id
+        var current_branch_id = localStorage.getItem("session_branch_id");
+        
+        if(branch_id != current_branch_id){
+          localStorage.setItem("session_branch_id", branch_id);
+
+          $.ajax({
+            type: "POST",
+            url: "controllers/sql.php?c=Branches&q=session_branch",
+            data: {
+              input: {
+                branch_id: branch_id
+              }
+            },
+            success: function(data) {
+              var json = JSON.parse(data);
+              $("#pos_branch_id").val(json.data);
+              swal({
+                    title: "Branch Change",
+                    text: "Session branch updated!",
+                    type: "success",
+                    confirmButtonText: "Ok"
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    }
+                });
             }
-          },
-          success: function(data) {
-            var json = JSON.parse(data);
-            location.reload();
-          }
-        });
+          });
+        }
       }
 
-      // function getBranchesSession() {
-      //   $.ajax({
-      //     url: "controllers/sql.php?c=Branches&q=select_branch",
-      //     dataType: 'json',
-      //     success: function(response) {
-      //       var data = response.data;
-      //       var branches = data.branches;
-      //       var sessionBranchId = sessionStorage.getItem('session_branch_id');
+      window.addEventListener("storage", function(event) {
+        if (event.key === "session_branch_id") {
+            var newBranchId = event.newValue;
 
-      //       $('#session_branch_id').empty();
+            if(newBranchId != current_branch_id){
+              $("#branch_id").val(newBranchId).trigger("change");
 
-      //       // Append options excluding the placeholder if a branch is selected
-      //       if (sessionBranchId && data.session_branch_id) {
-      //         // A branch is already selected, don't include the placeholder
-      //         $.each(branches, function(index, branch) {
-      //           $('#session_branch_id').append('<option value="' + branch.branch_id + '">' + branch.branch_name + '</option>');
-      //         });
-      //       } else {
-      //         // No branch selected yet, include the placeholder option
-      //         $('#session_branch_id').append('<option value="" disabled selected>&mdash; Please Select Branch &mdash;</option>');
-      //         $.each(branches, function(index, branch) {
-      //           $('#session_branch_id').append('<option value="' + branch.branch_id + '">' + branch.branch_name + '</option>');
-      //         });
-      //       }
-
-      //       if (data.session_branch_id) {
-      //         $('#session_branch_id').val(data.session_branch_id);
-      //       }
-
-      //       $('#session_branch_id').select2();
-      //     },
-      //     error: function(xhr, status, error) {
-      //       console.error('Error fetching branches: ' + error);
-      //     }
-      //   });
-      // }
-
-      // // Call getBranchesSession() to populate the dropdown initially
-      // getBranchesSession();
-
-
-      // $('#session_branch_id').on('change', function() {
-      //   var selectedBranchId = $(this).val();
-      //   var currentSessionBranchId = sessionStorage.getItem('session_branch_id');
-
-      //   // location.reload();
-
-      //   if (selectedBranchId != currentSessionBranchId) {
-      //     updateSessionBranch(selectedBranchId);
-      //     sessionStorage.setItem('session_branch_id', selectedBranchId);
-      //     location.reload();
-      //   }
-
-      // });
-
-      // function updateSessionBranch(branch_id) {
-      //   $.ajax({
-      //     url: "controllers/sql.php?c=Branches&q=update_session_branch",
-      //     type: 'POST',
-      //     data: {
-      //       input: {
-      //         branch_id: branch_id
-      //       }
-      //     },
-      //     success: function(response) {
-      //       if (response.status === 'success') {
-      //         console.log('Session branch updated successfully.');
-      //       } else {
-      //         console.error('Error updating session branch: ' + response.message);
-      //       }
-      //     }
-      //   });
-      // }
-
+              swal({
+                title: "Branch Change",
+                text: "Session branch updated!",
+                type: "success",
+                confirmButtonText: "Ok"
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+            }
+        }
+      });
 
       function checkPriceNotice() {
         $.ajax({
@@ -402,6 +365,8 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
           data: $("#frm_submit").serialize(),
           success: function(data) {
             var json = JSON.parse(data);
+
+            console.log(json.data);
             if (route_settings.has_detail == 1) {
               if (json.data > 0) {
                 $("#modalEntry").modal('hide');
@@ -862,11 +827,11 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
       // END MODULE
       function getSelectOption(class_name, primary_id, label, param = '', attributes = [], pre_value = '', pre_label = 'Please Select', sub_option = '', is_class = '', selected = 0) {
 
-        var fnc = (class_name == "SupplierPayment" || class_name == "CustomerPayment" || class_name == "Deposit" ? "show_ref" : "show");
+        //var fnc = (class_name == "SupplierPayment" || class_name == "CustomerPayment" || class_name == "Deposit" ? "show_ref" : "show");
 
         $.ajax({
           type: "POST",
-          url: "controllers/sql.php?c=" + class_name + "&q=" + fnc + "",
+          url: "controllers/sql.php?c=" + class_name + "&q=show",
           data: {
             input: {
               param: param

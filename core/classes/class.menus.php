@@ -17,6 +17,8 @@ class Menus extends Connection
                 array('url' => 'payment-option', 'name' => 'Payment Option', 'class_name' => 'PaymentOption', 'has_detail' => 0),
                 array('url' => 'formulation', 'name' => 'Formulation', 'class_name' => 'Formulation', 'has_detail' => 1),
                 array('url' => 'warehouse', 'name' => 'Warehouse', 'class_name' => 'Warehouse', 'has_detail' => 0),
+                array('url' => 'employee', 'name' => 'Employee', 'class_name' => 'Employee', 'has_detail' => 0),
+                array('url' => 'employee-category', 'name' => 'Employee Category', 'class_name' => 'EmployeeCategory', 'has_detail' => 0),
             ),
             'transaction' => array(
                 array('url' => 'credit-memo', 'name' => 'Credit Memo', 'class_name' => 'CreditMemo', 'has_detail' => 1),
@@ -57,6 +59,10 @@ class Menus extends Connection
                 array('url' => 'income-statement', 'name' => 'Income Statement', 'class_name' => 'IncomeStatement', 'has_detail' => 0),
                 array('url' => 'statement-of-accounts', 'name' => 'Statement of Accounts', 'class_name' => 'StatementOfAccounts', 'has_detail' => 0),
             ),
+            'accounting' => array(
+                array('url' => 'journals', 'name' => 'Journals', 'class_name' => 'Journals', 'has_detail' => 0),
+                array('url' => 'chart-classification', 'name' => 'Chart Classification', 'class_name' => 'ChartClassification', 'has_detail' => 0),
+            ),
             'admin' => array(
                 array('url' => 'admin-controls', 'name' => 'Admin Controls', 'class_name' => 'Settings', 'has_detail' => 0),
                 array('url' => 'users', 'name' => 'User Account', 'class_name' => 'Users', 'has_detail' => 0),
@@ -74,7 +80,7 @@ class Menus extends Connection
     public function routes($page, $dir)
     {
         $this->lists();
-        $levels = ['master-data', 'transaction', 'report', 'admin', 'user'];
+        $levels = ['master-data', 'transaction', 'accounting', 'report', 'admin', 'user'];
 
         if ($page == 'homepage' || $page == 'profile') {
             $this->dir = $dir;

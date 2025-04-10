@@ -4,7 +4,7 @@ $pre_class = "classes/class.";
 $classes = array(
     'Connection'            => $pre_class . 'connection.php',
     'Customers'             => $pre_class . 'customers.php',
-    'CustomerSOA'             => $pre_class . 'customersoa.php',
+    'CustomerSOA'           => $pre_class . 'customersoa.php',
     'CustomerPayment'       => $pre_class . 'customerpayment.php',
     'Discounts'             => $pre_class . 'discounts.php',
     'Expense'               => $pre_class . 'expense.php',
@@ -58,4 +58,8 @@ $classes = array(
     'StockTransfer'         => $pre_class . 'stocktransfer.php',
     'Branches'              => $pre_class . 'branches.php',
     'Warehouses'            => $pre_class . 'warehouses.php',
+    'Employee'              => $pre_class . 'employee.php',
+    'EmployeeCategory'      => $pre_class . 'employeecategory.php',
+    'Journals'              => $pre_class . 'journals.php',
+    'ChartClassification'   => $pre_class . 'chartclassification.php',
 );

@@ -4,6 +4,7 @@ class UserPrivileges extends Connection
 {
     private $table = 'tbl_user_privileges';
     private $pk = 'privilege_id';
+    public $inputs = [];
 
     public function add()
     {
@@ -18,7 +19,13 @@ class UserPrivileges extends Connection
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         $privilege_id = $row['privilege_id'];
-                        $this->update($this->table, ['status' => 1], "$this->pk = '$privilege_id'");
+
+                        $this->update(
+                            $this->table, 
+                            ['status' => 1], 
+                            "$this->pk = '$privilege_id'"
+                        );
+
                     } else {
                         $this->insert($this->table, [
                             'user_id' => $user_id,
@@ -41,13 +48,21 @@ class UserPrivileges extends Connection
         $master_data = [];
         $_menus = $Menus->menus['master-data'];
         foreach ($_menus as $row) {
-            $master_data[] = ['name' => $row['name'], 'url' => $row['url'], 'status' => $this->check($row['url'], $user_id)];
+            $master_data[] = [
+                'name'      => $row['name'], 
+                'url'       => $row['url'], 
+                'status'    => $this->check($row['url'], $user_id)
+            ];
         }
 
         $transaction_data = [];
         $_menus = $Menus->menus['transaction'];
         foreach ($_menus as $row) {
-            $transaction_data[] = ['name' => $row['name'], 'url' => $row['url'], 'status' => $this->check($row['url'], $user_id)];
+            $transaction_data[] = [
+                'name'      => $row['name'], 
+                'url'       => $row['url'], 
+                'status'    => $this->check($row['url'], $user_id)
+            ];
         }
 
         $reports_data = [];

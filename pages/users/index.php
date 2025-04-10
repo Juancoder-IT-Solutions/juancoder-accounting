@@ -151,7 +151,7 @@
                 },
                 {
                     "mRender": function(data, type, row) {
-                        return row.user_category == 'A' ? '' : "<center><button class='btn btn-success btn-circle' onclick='getUserPrivileges(" + row.user_id + ")'><span class='ti ti-key'></span></button></center>";
+                        return row.user_category == 'A' ? '' : "<center><button class='btn btn-success btn-circle' onclick='getUserPrivileges(" + row.user_id + ")' style='padding:15px;height:45px;'><span class='ti ti-key'></span></button></center>";
                     }
                 },
                 {
