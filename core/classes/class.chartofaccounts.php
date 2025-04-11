@@ -11,8 +11,9 @@
             $fetch = $this->select($this->table, '*');
             $rows = [];
             while($row = $fetch->fetch_assoc()){
+                $row['chart_type'] = $row['chart_type'] == "M" ? "Main" : "Sub";
                 $row['classification_name'] = $ChartClassification->name($row['chart_class_id']);
-                $row['main_chart_name'] = $this->mainChartName($row['chart_id']);
+                $row['main_chart_name'] = $this->mainChartName($row['main_chart_id']);
                 $rows[] = $row;
             }
             return $rows;
@@ -20,8 +21,7 @@
 
         public function add()
         {   
-
-            $main_chart = isset($this->inputs['main_chart']) && $this->inputs['main_chart'] !== "" ? $this->clean($this->inputs['main_chart']) : null;
+            $main_chart = isset($this->inputs['main_chart_id']) && $this->inputs['main_chart_id'] !== "" ? $this->clean($this->inputs['main_chart']) : null;
             $form = [
                 'chart_code'        => $this->clean($this->inputs['chart_code']),
                 'chart_type'        => $this->clean($this->inputs['chart_type']),
@@ -47,11 +47,27 @@
             return $this->delete($this->table, "$this->pk IN($ids)");
         }
 
+        public function edit(){
+            $id = $this->inputs[$this->pk];
+            $main_chart = isset($this->inputs['main_chart_id']) && $this->inputs['main_chart_id'] !== "" ? $this->clean($this->inputs['main_chart_id']) : null;
+            
+            $form = [
+                'chart_code'        => $this->clean($this->inputs['chart_code']),
+                'chart_type'        => $this->clean($this->inputs['chart_type']),
+                'chart_name'        => $this->clean($this->inputs['chart_name']),
+                'chart_class_id'    => $this->inputs['chart_class_id'],
+                'main_chart_id'     => $main_chart
+            ];
+
+            $result = $this->update($this->table, $form, "$this->pk = '$id'");
+            return $result;    
+        }
+
         public function mainChartName($id){
             $row = $this->select($this->table, "chart_name", "$this->pk = '$id'");
             $result = $row->fetch_assoc();
             return $result['chart_name'];
-        }   
+        }
     }
 
 ?>

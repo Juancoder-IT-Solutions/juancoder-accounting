@@ -38,7 +38,7 @@
                         <div class="col">
                             <label><strong>Category</strong></label>
                             <div>
-                                <select class="form-control select2" name="input[emp_category_id]" id="emp_category_id" required>
+                                <select class="form-control select2 input-item" name="input[emp_category_id]" id="emp_category_id" required>
                                     <option value=''>&mdash; Please Select &mdash;</option>
                                 </select>
                             </div>

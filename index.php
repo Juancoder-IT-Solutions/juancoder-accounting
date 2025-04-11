@@ -419,6 +419,7 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
               //console.log(this.id);
               const id_name = this.id;
               this.value = json[id_name];
+
             });
 
             $(".select2").select2().trigger('change');

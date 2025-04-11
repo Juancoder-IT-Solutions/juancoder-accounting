@@ -18,14 +18,26 @@
                         <div class="col">
                             <label><strong>Type</strong></label>
                             <div>
-                                <select class="form-control" name="input[chart_type]" id="chart_type">
-                                    <option value="">Select Type</option>
+                                <select class="form-control form-control-sm input-item select2" name="input[chart_type]" id="chart_type" onchange="changeChart()">
+                                    <option value=''>&mdash; Please Select &mdash;</option>
                                     <option value="M">Main</option>
                                     <option value="S">Sub</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group row" style="display: none;" id="mainchartdiv">
+                        <div class="col">
+                            <label><strong>Main Chart</strong></label>
+                            <div>
+                                <select class="form-control select2 input-item" name="input[main_chart_id]" id="main_chart_id" onchange="chartVal()" required>
+                                    <option value=''>&mdash; Please Select &mdash;</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <div class="col">
                             <label><strong>Chart</strong></label>
@@ -34,21 +46,13 @@
                             </div>
                         </div>
                     </div>
+                    
 
-                    <div class="form-group row" style="display: none;" id="mainChartinput">
+                    <div class="form-group row" id="classificationdiv">
                         <div class="col">
-                            <label><strong>Main Chart</strong></label>
+                            <label><strong>Chart Classification</strong></label>
                             <div>
-                                <input type="text" class="form-control input-item" name="input[main_chart]" id="main_chart_id" autocomplete="off" placeholder="Main Chart" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col">
-                            <label><strong>Classification</strong></label>
-                            <div>
-                                <select class="form-control select2" name="input[chart_class_id]" id="chart_class_id" required>
+                                <select class="form-control select2 input-item" name="input[chart_class_id]" id="chart_class_id" required>
                                     <option value=''>&mdash; Please Select &mdash;</option>
 
                                 </select>

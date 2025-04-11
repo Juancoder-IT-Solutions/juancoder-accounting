@@ -95,21 +95,44 @@
         });  
     }
 
+    function changeChart(){
+        if ($("#chart_type").val() == "S") {
+            $("#classificationdiv").hide();
+            $("#mainchartdiv").show();
+            $("#chart_class_id").prop("required", false);
+           
+        } else {
+            $("#classificationdiv").show();
+            $("#mainchartdiv").hide();
+
+            $("#chart_name").val("");
+            $("#chart_class_id").val("");
+            $("#main_chart_id").val("");
+            
+            $("#main_chart_id").prop("required", false);
+            $("#chart_class_id").prop("required", true);
+        }
+    }
+
+    function chartVal() {
+        var chart_type = $("#chart_type").val();
+
+        if (chart_type == "S") {
+            var optionSelected = $("#main_chart_id").find('option:selected').attr('chart_name');
+            chart_name = optionSelected;
+            $("#chart_name").val(chart_name + " - ");
+        } else {
+            $("#chart_name").val("");
+        }
+
+    }
 
     $(document).ready(function() {
-
-        $("#chart_type").change(function() {
-            if ($(this).val() != "M") {
-                $("#mainChartinput").show();
-            } else {
-                $("#mainChartinput").hide();
-                $("#main_chart_id").val("");
-                $("#main_chart_id").removeAttr("required");
-            }
-        });
 
         getEntries();
 
         getSelectOption('ChartClassification', 'chart_class_id', 'chart_class_name');
+        
+        getSelectOption('ChartOfAccounts', 'main_chart_id', "chart_name", "chart_type = 'M'", ['chart_name']);
     });
 </script>

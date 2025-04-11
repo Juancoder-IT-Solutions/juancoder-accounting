@@ -91,12 +91,34 @@ class Connection
         }
     }
 
+    //old
+    // public function update($table, $para = array(), $id)
+    // {
+    //     $args = array();
+
+    //     foreach ($para as $key => $value) {
+    //         $args[] = "$key = '$value'";
+    //     }
+
+    //     $sql = "UPDATE  $table SET " . implode(',', $args);
+
+    //     $sql .= " WHERE $id";
+
+    //     $result = $this->mysqli->query($sql) or die($this->mysqli->error);
+    //     return $result ? 1 : 0;
+    // }
+
     public function update($table, $para = array(), $id)
     {
         $args = array();
 
         foreach ($para as $key => $value) {
-            $args[] = "$key = '$value'";
+            if(is_null($value) || $value === ""){
+                $args[] = "$key = NULL";
+            }else{
+                $escaped_value = addslashes($value);
+                $args[] = "$key = '$escaped_value'";
+            }
         }
 
         $sql = "UPDATE  $table SET " . implode(',', $args);

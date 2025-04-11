@@ -38,7 +38,6 @@ class ExpenseCategories extends Connection
         $result = $this->select($this->table, '*', $param);
         while ($row = $result->fetch_assoc()) {
             $row['expense_type_name'] = $row['expense_type'] == "O" ? "Other Expense" : "Operational Expense";
-            $row['date_last_modified'] = ($row['date_last_modified'] == "0000-00-00 00:00:00") ? "" : date('Y-m-d H:i:s', strtotime($row['date_last_modified'] . ' + 8 hours'));
             $rows[] = $row;
         }
         return $rows;
