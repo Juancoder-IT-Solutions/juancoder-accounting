@@ -62,4 +62,5 @@ $classes = array(
     'EmployeeCategory'      => $pre_class . 'employeecategory.php',
     'Journals'              => $pre_class . 'journals.php',
     'ChartClassification'   => $pre_class . 'chartclassification.php',
+    'ChartOfAccounts'       => $pre_class . 'chartofaccounts.php',
 );

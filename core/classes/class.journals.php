@@ -38,8 +38,8 @@
         public function add()
         {
             $form = [
-                'journal_name' => $this->inputs['emp_firstname'],
-                'journal_code' => $this->inputs['emp_mname'],
+                'journal_name' => $this->inputs['name'],
+                'journal_code' => $this->inputs['code'],
             ];
             
             $result = $this->insert($this->table, $form);

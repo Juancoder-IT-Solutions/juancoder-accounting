@@ -12,7 +12,7 @@ class Employee extends Connection
         $rows = [];
         while($row = $fetch->fetch_assoc()){
             $row['employee_name'] = $row['emp_firstname'] . ' ' . $row['emp_lastname'];
-            $row['employee_category'] = $EmployeeCategory->name($row['category_id']);
+            $row['employee_category'] = $EmployeeCategory->name($row['emp_category_id']);
             $rows[] = $row;
         }
 
@@ -22,13 +22,13 @@ class Employee extends Connection
     public function add()
     {
         $form = [
-            'emp_firstname' => $this->inputs['emp_firstname'],
-            'emp_mname'     => $this->inputs['emp_mname'],
-            'emp_lastname'  => $this->inputs['emp_lastname'],
-            'category_id'   => $this->inputs['category_id']
+            'emp_firstname'     => $this->inputs['emp_firstname'],
+            'emp_mname'         => $this->inputs['emp_mname'],
+            'emp_lastname'      => $this->inputs['emp_lastname'],
+            'emp_category_id'   => $this->inputs['emp_category_id']
         ];
 
-        $result = $this->insert($this->table, $form);
+        $result = $this->insert2($this->table, $form);
         return $result;
     }
 
@@ -37,7 +37,7 @@ class Employee extends Connection
             'emp_firstname' => $this->inputs['emp_firstname'],
             'emp_mname'     => $this->inputs['emp_mname'],
             'emp_lastname'  => $this->inputs['emp_lastname'],
-            'category_id'   => $this->inputs['category_id']
+            'emp_category_id'   => $this->inputs['emp_category_id']
         ];
 
         $result = $this->update($this->table, $form, "$this->pk = {$this->inputs[$this->pk]}");

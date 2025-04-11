@@ -11,7 +11,7 @@
                         <div class="col">
                             <label><strong>Name</strong></label>
                             <div>
-                                <input type="text" class="form-control input-item" name="input[journal_name]" id="journal_name" autocomplete="off" placeholder="Journal Name" required>
+                                <input type="text" class="form-control input-item" name="input[name]" id="journal_name" autocomplete="off" placeholder="Journal Name" required>
                             </div>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                         <div class="col">
                             <label><strong>Code</strong></label>
                             <div>
-                                <input type="text" class="form-control input-item" name="input[journal_code]" id="journal_code" autocomplete="off" placeholder="Journal Code" required>
+                                <input type="text" class="form-control input-item" name="input[code]" id="journal_code" autocomplete="off" placeholder="Journal Code" required>
                             </div>
                         </div>
                     </div>

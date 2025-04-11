@@ -19,7 +19,7 @@
                         <div class="col">
                             <label><strong>Code</strong></label>
                             <div>
-                                <input type="text" class="form-control input-item" name="input[chart_class_code]" id="chart_class_code" autocomplete="off" placeholder="Chart Class Code" required>
+                                <input type="text" class="form-control input-item" name="input[chart_class_code]" id="chart_class_code" autocomplete="off" placeholder="Chart Class Code">
                             </div>
                         </div>
                     </div>

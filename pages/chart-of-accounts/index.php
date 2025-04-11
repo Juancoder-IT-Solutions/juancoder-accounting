@@ -3,8 +3,8 @@
         <div class="col-md-12 grid-margin">
             <div class="row">
                 <div class="col-12 col-xl-12 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Employee Category</h3>
-                    <h6 class="font-weight-normal mb-3">Manage employee category here</h6>
+                    <h3 class="font-weight-bold">Chart of Accounts</h3>
+                    <h6 class="font-weight-normal mb-3">Manage chart of accounts here</h6>
                 </div>
             </div>
 
@@ -30,7 +30,11 @@
                                 <tr>
                                     <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
                                     <th></th>
+                                    <th>Code</th>
                                     <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Main Chart</th>
+                                    <th>Chart Class</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
                                 </tr>
@@ -44,9 +48,8 @@
         </div>
     </div>
 </div>
-<?php include 'modal_employee_category.php' ?>
+<?php include 'modal_chart_of_accounts.php' ?>
 <script type="text/javascript">
-    
 
     function getEntries() {
         $("#dt_entries").DataTable().destroy();
@@ -59,16 +62,28 @@
             },
             "columns": [{
                 "mRender": function(data, type, row) {
-                    return "<input type='checkbox' value=" + row.emp_category_id + " class='dt_id' style='position: initial; opacity:1;'>";
+                    return "<input type='checkbox' value=" + row.chart_id + " class='dt_id' style='position: initial; opacity:1;'>";
                 }
             },
             {
                 "mRender": function(data, type, row) {
-                    return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails(" + row.emp_category_id + ")' style='padding:15px';height='45px;'><span class='ti ti-pencil'></span></button></div>";
+                    return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails("+row.chart_id+ ")' style='padding:15px';height='45px;'><span class='ti ti-pencil'></span></button></div>";
                 }
             },
             {
-                "data": "category_name"
+                "data": "chart_code"
+            },
+            {
+                "data": "chart_name"
+            },
+            {
+                "data": "chart_type"
+            },
+            {
+                "data": "main_chart_name"
+            },
+            {
+                "data": "classification_name"
             },
             {
                 "data": "date_added"
@@ -80,7 +95,21 @@
         });  
     }
 
+
     $(document).ready(function() {
+
+        $("#chart_type").change(function() {
+            if ($(this).val() != "M") {
+                $("#mainChartinput").show();
+            } else {
+                $("#mainChartinput").hide();
+                $("#main_chart_id").val("");
+                $("#main_chart_id").removeAttr("required");
+            }
+        });
+
         getEntries();
+
+        getSelectOption('ChartClassification', 'chart_class_id', 'chart_class_name');
     });
 </script>

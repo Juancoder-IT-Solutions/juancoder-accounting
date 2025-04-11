@@ -52,5 +52,11 @@
             return $this->delete($this->table, "$this->pk IN($ids)");
         }
 
+        public function name($id){
+            $row = $this->select($this->table, "chart_class_name", "$this->pk = '$id'");
+            $result = $row->fetch_assoc();
+            return $result['chart_class_name'];
+        }
+
     }
 ?>

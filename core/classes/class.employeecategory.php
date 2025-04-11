@@ -2,7 +2,7 @@
     class EmployeeCategory extends Connection
     {
         private $table = 'tbl_employee_category';
-        public $pk = 'category_id';
+        public $pk = 'emp_category_id';
         public $inputs = [];
 
         public function show()
@@ -29,7 +29,7 @@
                 'category_name' => $this->inputs['category_name'],
             ];
 
-            $result = $this->insert($this->table, $form);
+            $result = $this->insert2($this->table, $form);
             return $result;
         }
 
@@ -49,11 +49,11 @@
             return $this->delete($this->table, "$this->pk IN($ids)");
         }
 
-        public function name($primary_id)
+        public function name($id)
         {
-            $result = $this->select($this->table, "category_name", "$this->pk = '$primary_id'");
-            $row = $result->fetch_assoc();
-            return $row['category_name'];
+            $row = $this->select($this->table, "category_name", "$this->pk = '$id'");
+            $result = $row->fetch_assoc();
+            return $result['category_name'];
         }
     }
 ?>

@@ -92,6 +92,6 @@
     $(document).ready(function() {
         getEntries();
 
-        getSelectOption('EmployeeCategory', 'category_id', 'category_name');
+        getSelectOption('EmployeeCategory', 'emp_category_id', 'category_name');
     });
 </script>

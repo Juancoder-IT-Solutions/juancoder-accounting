@@ -6,7 +6,7 @@
                     <h4 class="modal-title" id="modalLabel"><span class='fa fa-pen'></span> Add Entry</h4>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="hidden_id" name="input[id]">
+                    <input type="hidden" id="hidden_id" name="input[emp_category_id]">
                     <div class="form-group row">
                         <div class="col">
                             <label><strong>Category</strong></label>
