@@ -77,7 +77,7 @@
                 "data": "chart_name"
             },
             {
-                "data": "chart_type"
+                "data": "chart_type_name"
             },
             {
                 "data": "main_chart_name"

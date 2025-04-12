@@ -1,6 +1,6 @@
 <form method='POST' id='frm_submit_2' class="warehouse">
     <div class="modal fade" id="modalEntry2" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" style="margin-top: 50px;" role="document">
+        <div class="modal-dialog modal-lg" style="margin-top: 50px; width:60%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="modalLabel"><span class='fa fa-pen'></span> Add Entry</h4>

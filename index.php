@@ -840,6 +840,7 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
           },
           success: function(data) {
             var json = JSON.parse(data);
+            console.log(json);
             if (pre_value != "remove") {
               if (is_class == '') {
                 $("#" + primary_id).html("<option value='" + pre_value + "'> &mdash; " + pre_label + " &mdash; </option>");

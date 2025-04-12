@@ -16,6 +16,8 @@
             array('Category', 'employee-category'),
         ));
 
+        $Menus->sidebar('Suppliers', 'suppliers', 'truck');
+
         $Menus->sidebar_parent('Expense', 'money', array(
             array('Entries', 'expense'),
             array('Categories', 'expense-category'),
