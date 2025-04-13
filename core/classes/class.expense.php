@@ -19,10 +19,10 @@ class Expense extends Connection
         
         $form = array(
             $this->name     => $this->clean($this->inputs[$this->name]),
-            'branch_id'     => $this->getBranch(),
+            'branch_id'     => $this->clean($this->inputs['branch_id']),
             'remarks'       => $this->inputs['remarks'],
             'expense_date'  => $this->inputs['expense_date'],
-            'encoded_by'    => $_SESSION['user']['id'],
+            'encoded_by'    => $this->clean($this->inputs['encoded_by']),
             'date_added'    => $this->getCurrentDate()
         );
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
@@ -165,6 +165,77 @@ class Expense extends Connection
         $row = $fetchData->fetch_assoc();
 
         return $row['total'];
+    }
+
+    public function getDetailsPOS()
+    {
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $rows = array();
+        $result = $this->select("tbl_expense h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id LEFT JOIN tbl_expense_category c ON c.expense_category_id=d.expense_category_id", 'h.*, d.*, c.expense_category', "h.reference_number='$reference_number'");
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+    public function edit_detail(){
+        $expense_detail_id = $this->clean($this->inputs['expense_detail_id']);
+        $amount = $this->clean($this->inputs['amount']);
+        return $this->update($this->table_detail, ['amount' => $amount], "expense_detail_id='$expense_detail_id'");
+    }
+
+    public function addEntryPOS(){
+        $response = [];
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $expense_category_code = $this->clean($this->inputs['expense_category_code']);
+        $this->inputs['expense_date'] = $this->getCurrentDate();
+        $this->inputs['status'] = 'S';
+        $expense_category_id = $this->clean($this->inputs['expense_category_id']);
+
+        if ($expense_category_id == "" || $expense_category_id <= 0) {
+            $fetch = $this->select("tbl_expense_category", "expense_category_id", "expense_category_code='$expense_category_code'");
+            $row = $fetch->fetch_assoc();
+            $this->inputs['expense_category_id'] = $row['expense_category_id'];
+        }
+
+        if($this->inputs['expense_category_id'] > 0){
+            $expense_id = $this->add();
+
+            if ($expense_id == -2) {
+                $fetch = $this->select($this->table, "*", "reference_number='$reference_number'");
+                $row = $fetch->fetch_assoc();
+                $expense_id = $row['expense_id'];
+            }
+
+            // checker for reference num
+            if ($reference_number == "") {
+                $reference_number = sprintf("%'.06d", $expense_id);
+                $form = array(
+                    'reference_number' => $reference_number
+                );
+                $this->update($this->table, $form, "$this->pk = '$expense_id'");
+            }
+
+            $this->inputs[$this->pk] = $expense_id;
+            $primary_id = $expense_id;
+            $expense_category_id     = $this->inputs['expense_category_id'];
+
+            $form = array(
+                $this->pk       => $this->inputs[$this->pk],
+                'expense_category_id'   => $expense_category_id,
+                'amount'      => $this->inputs['amount'],
+            );
+            
+            $res = $this->insertIfNotExist($this->table_detail, $form, "expense_id='$primary_id' AND expense_category_id='$expense_category_id'", 'Y');
+
+            $response['response_code'] = 1;
+            $response['response_reference_num'] = $reference_number;
+            return $response;
+        }else{
+            $response['response_code'] = 0;
+            $response['response_reference_num'] = "";
+            return $response;
+        }
     }
 
     public function graph()

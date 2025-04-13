@@ -1,6 +1,6 @@
 <?php
 
-define('APP_FOLDER', 'pos');
+define('APP_FOLDER', 'juancoder-accounting');
 define('BASE_URL', 'http://localhost/' . APP_FOLDER . '/');
 define("BASE_PATH", __DIR__ . "/../");
 define('DEVELOPMENT', true);
@@ -8,7 +8,7 @@ define('DEVELOPMENT', true);
 define("HOST", "localhost");
 define("USER", "root");
 define("PASSWORD", "");
-define("DBNAME", "u814036432_jcis_db");
+define("DBNAME", "jcis_accounting_db");
 
 
 // define("HOST", "localhost");

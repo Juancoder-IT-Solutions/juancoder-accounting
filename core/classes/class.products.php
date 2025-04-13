@@ -152,10 +152,6 @@ class Products extends Connection
         $param = isset($this->inputs['param']) ? $this->inputs['param'] : '';
         $branch_id = $this->inputs['branch_id'];
         $warehouse_id = $this->inputs['warehouse_id'];
-        //$ProductCategories = new ProductCategories();
-        //$Inv = new InventoryReport();
-        $branch_id = $this->inputs['branch_id'];
-        $warehouse_id = $this->inputs['warehouse_id'];
 
         $rows = array();
         $result = $this->select("$this->table p LEFT JOIN tbl_product_categories pc ON p.product_category_id=pc.product_category_id LEFT JOIN tbl_product_warehouses pw ON p.product_id=pw.product_id", '*', "branch_id='$branch_id' AND warehouse_id='$warehouse_id'");
