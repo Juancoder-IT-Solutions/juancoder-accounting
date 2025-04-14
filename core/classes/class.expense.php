@@ -238,6 +238,93 @@ class Expense extends Connection
         }
     }
 
+    public function save_entry()
+    {
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $total_amount = $this->get_total_amount();
+        
+        $form = array(
+            'status' => 'P',
+            'total_amount' => $total_amount
+        );
+
+        return $this->update($this->table, $form, "reference_number='$reference_number' and reference_number != ''");
+    }
+
+    public function finish_entry(){
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $encoded_by = $this->clean($this->inputs['encoded_by']);
+        $branch_id = $this->clean($this->inputs['branch_id']);
+        $warehouse_id = $this->clean($this->inputs['warehouse_id']);
+        $total_amount = $this->get_total_amount();
+
+        $form = array(
+            'status' => 'F',
+            'total_amount' => $total_amount,
+            'encoded_by' => $encoded_by,
+            'branch_id' => $branch_id,
+            'warehouse_id' => $warehouse_id
+        );
+
+        return $this->update($this->table, $form, "reference_number='$reference_number' and reference_number != ''");
+
+    }
+
+    public function get_total_amount(){
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $fetch = $this->select("$this->table h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id", "SUM(d.amount) AS total_amount", "reference_number='$reference_number'");
+        $row = $fetch->fetch_assoc();
+
+        return $row['total_amount'] * 1;
+        
+    }
+
+    public function get_pending_entries(){
+        $branch_id = $this->clean($this->inputs['branch_id']);
+        $warehouse_id = $this->clean($this->inputs['warehouse_id']);
+
+        $rows = array();
+        $fetch = $this->select("$this->table e LEFT JOIN tbl_suppliers s ON e.supplier_id=s.supplier_id", "e.*, s.supplier_name", "e.status='P' AND branch_id='$branch_id' ORDER BY e.date_added ASC");
+        while($row = $fetch->fetch_assoc()){
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    public function remove_detail_pos()
+    {
+        $access_code = $this->clean($this->inputs['access_code']);
+        $expense_detail_id = $this->clean($this->inputs['expense_detail_id']);
+
+        $Settings = new Settings();
+        $setting_row = $Settings->view();
+        if ($setting_row['module_delete'] == $access_code) {
+            return $this->delete($this->table_detail, "$this->pk2='$expense_detail_id'");
+        } else {
+            return -2;
+        }
+    }
+
+    public function cancel_entry_pos()
+    {
+
+        $access_code = $this->clean($this->inputs['access_code']);
+        $reference_number = $this->clean($this->inputs['reference_number']);
+
+        $Settings = new Settings();
+        $setting_row = $Settings->view();
+        if ($setting_row['module_cancel'] == $access_code) {
+            $form = array(
+                'status' => 'C'
+            );
+
+            return $this->update($this->table, $form, "reference_number = '$reference_number' and reference_number != ''");
+        } else {
+            return -2;
+        }
+    }
+
     public function graph()
     {
         $backgroundColors = [
