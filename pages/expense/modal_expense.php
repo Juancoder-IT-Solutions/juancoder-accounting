@@ -109,22 +109,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <div class="col">
-                                    <label><strong>Invoice</strong></label>
-                                    <div>
-                                        <input type="text" class="form-control form-control-sm" name="input[invoice_no]" id="invoice_no" maxlength="15">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <label><strong>Amount</strong></label>
-                                    <div>
-                                        <input type="number" class="form-control form-control-sm" name="input[amount]" step=".01" min=0 id="amount" required>
-                                    </div>
-                                </div>
-                            </div>
-
+                            
                             <div class="form-group row">
                                 <div class="col">
                                     <label><strong>Description</strong></label>
