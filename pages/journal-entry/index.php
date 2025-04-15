@@ -95,6 +95,44 @@
         });  
     }
 
+    function getEntries2() {
+        var hidden_id_2 = $("#hidden_id_2").val();
+        var param = "journal_entry_id = '" + hidden_id_2 + "'";
+
+        $("#dt_entries_2").DataTable().destroy();
+        $("#dt_entries_2").DataTable({
+            "processing": true,
+            "ajax": {
+                "url": "controllers/sql.php?c=" + route_settings.class_name + "&q=show_detail",
+                "dataSrc": "data",
+                "type": "POST",
+                "data": {
+                    input: {
+                        param: param
+                    }
+                }
+            },
+            "columns": [{
+                    "mRender": function(data, type, row) {
+                    return "<input type='checkbox' value=" + row.journal_entry_detail_id + " class='dt_id_2' style='position: initial; opacity:1;'>";
+                }
+                },
+                {
+                    "data": "chart"
+                },
+                {
+                    "data": "description"
+                },
+                {
+                    "data": "debit"
+                },
+                {
+                    "data": "credit"
+                },
+            ]
+        });
+    }
+
     function generateRef() {
         var refnum = $("#reference_number").val();
         var optionSelected = $("#journal_id").find('option:selected').attr('journal_code');
@@ -108,8 +146,6 @@
         getEntries();
         // getSelectOption('Branches', 'branch_id_entry', 'branch_name');
         getSelectOption('Journals', 'journal_id', 'journal_name', '', ['journal_code']);
-        
-        
-        // getSelectOption('ChartOfAccounts', 'main_chart_id', "chart_name", "chart_type = 'M'", ['chart_name']);
+        getSelectOption('ChartOfAccounts', 'chart_id', 'chart_name');
     });
 </script>

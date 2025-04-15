@@ -4,6 +4,7 @@
         private $table = 'tbl_employee_category';
         public $pk = 'emp_category_id';
         public $inputs = [];
+        public $name = 'category_name';
 
         public function show()
         {
@@ -29,7 +30,7 @@
                 'category_name' => $this->inputs['category_name'],
             ];
 
-            $result = $this->insert2($this->table, $form);
+            $result = $this->insertIfNotExist($this->table, $form);
             return $result;
         }
 

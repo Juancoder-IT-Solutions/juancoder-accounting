@@ -16,15 +16,15 @@ class Expense extends Connection
     public $uri = "expense";
     public function add()
     {
-        
         $form = array(
             $this->name     => $this->clean($this->inputs[$this->name]),
             'branch_id'     => $this->getBranch(),
             'remarks'       => $this->inputs['remarks'],
             'expense_date'  => $this->inputs['expense_date'],
-            'encoded_by'    => $_SESSION['user']['id'],
+            // 'encoded_by'    => $_SESSION['user']['id'],
             'date_added'    => $this->getCurrentDate()
         );
+
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
     }
 

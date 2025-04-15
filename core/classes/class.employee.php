@@ -4,6 +4,7 @@ class Employee extends Connection
     private $table = 'tbl_employee';
     public $pk = 'employee_id';
     public $inputs = [];
+    public $name = 'emp_firstname';
 
     public function show()
     {   
@@ -28,7 +29,7 @@ class Employee extends Connection
             'emp_category_id'   => $this->inputs['emp_category_id']
         ];
 
-        $result = $this->insert2($this->table, $form);
+        $result = $this->insertIfNotExist($this->table, $form);
         return $result;
     }
 

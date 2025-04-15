@@ -29,43 +29,43 @@ class Connection
         return $result;
     }
     //old
-    // public function insert($table, $para = array(), $last_id = 'N')
-    // {
-    //     $table_columns = implode(',', array_keys($para));
-    //     $table_value = implode("','", $para);
-
-    //     $sql = "INSERT INTO $table($table_columns) VALUES('$table_value')";
-
-    //     $result = $this->mysqli->query($sql) or die($this->mysqli->error);
-    //     $lastId = $this->mysqli->insert_id;
-    //     $ret_ = ($last_id == 'Y') ? $lastId : 1;
-    //     return $result ? $ret_ : 0;
-    // }
-
     public function insert($table, $para = array(), $last_id = 'N')
     {
         $table_columns = implode(',', array_keys($para));
+        $table_value = implode("','", $para);
 
-        $escaped_values = array_map(function ($value) {
-            if (is_null($value) || $value === "") {
-                return "NULL";
-            } elseif (is_numeric($value)) {
-                return $value;
-            } else {
-                return "'" . addslashes($value) . "'";
-            }
-        }, array_values($para));
-
-        $table_value = implode(',', $escaped_values);
-
-        $sql = "INSERT INTO $table ($table_columns) VALUES ($table_value)";
+        $sql = "INSERT INTO $table($table_columns) VALUES('$table_value')";
 
         $result = $this->mysqli->query($sql) or die($this->mysqli->error);
         $lastId = $this->mysqli->insert_id;
         $ret_ = ($last_id == 'Y') ? $lastId : 1;
-
         return $result ? $ret_ : 0;
     }
+
+    // public function insert($table, $para = array(), $last_id = 'N')
+    // {
+    //     $table_columns = implode(',', array_keys($para));
+
+    //     $escaped_values = array_map(function ($value) {
+    //         if (is_null($value) || $value === "") {
+    //             return "NULL";
+    //         } elseif (is_numeric($value)) {
+    //             return $value;
+    //         } else {
+    //             return "'" . addslashes($value) . "'";
+    //         }
+    //     }, array_values($para));
+
+    //     $table_value = implode(',', $escaped_values);
+
+    //     $sql = "INSERT INTO $table ($table_columns) VALUES ($table_value)";
+
+    //     $result = $this->mysqli->query($sql) or die($this->mysqli->error);
+    //     $lastId = $this->mysqli->insert_id;
+    //     $ret_ = ($last_id == 'Y') ? $lastId : 1;
+
+    //     return $result ? $ret_ : 0;
+    // }
 
 
     public function insert_select($table, $table_select, $para, $where_clause = '')

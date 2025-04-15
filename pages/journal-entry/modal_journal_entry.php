@@ -65,7 +65,7 @@
     </div>
 </form>
 
-<div class="modal fade bd-example-modal-lg" id="modalEntry" aria-labelledby="myModalLabel">
+<div class="modal fade bd-example-modal-lg" id="modalEntry2" aria-labelledby="myModalLabel">
     <div class="modal-dialog  modal-lg" style="margin-top: 50px;" role="document">
         <div class="modal-content">
             <div class="modal-header" style="display:block;">
@@ -73,9 +73,9 @@
                     <div class="col-sm-4">
                         <div><b>General Reference:</b> <span id="general_reference" class="label-item"></span></div>
                         <div><b>Cross Reference:</b> <span id="cross_reference" class="label-item"></span></div>
-                        <div><b>Branch:</b> <span id="expense_type_name_label" class="label-item"></span></div>
-                        <div><b>Date:</b> <span id="remarks_label" class="label-item"></span></div>
-                        <div><b>Remarks:</b> <span id="remarks_label" class="label-item"></span></div>
+                        <div><b>Branch:</b> <span id="branch_id" class="label-item"></span></div>
+                        <div><b>Date:</b> <span id="journal_date" class="label-item"></span></div>
+                        <div><b>Remarks:</b> <span id="remarks" class="label-item"></span></div>
                     </div>
                     <div class="col-sm-8">
                         <ul class="nav justify-content-end">
@@ -105,7 +105,9 @@
                                 <div class="col">
                                     <label><strong>Chart</strong></label>
                                     <div>
-                                        <select class="form-control form-control-sm select2" name="input[chart_id]" id="chart_id" required></select>
+                                        <select class="form-control form-control-sm select2" name="input[chart_id]" id="chart_id" required>
+                                            <option value=''>&mdash; Please Select &mdash;</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -114,12 +116,18 @@
                                 <div class="col">
                                     <label><strong>Type</strong></label>
                                     <div>
-                                        <input type="text" class="form-control form-control-sm" name="input[type]" id="type" maxlength="15">
                                         <select class="form-control select2" name="input[type]" id="type" required>
                                             <option value=''>&mdash; Please Select &mdash;</option>
-                                            <option value='D'>&mdash; Debit &mdash;</option>
-                                            <option value='C'>&mdash; Credit &mdash;</option>
+                                            <option value='D'>Debit</option>
+                                            <option value='C'>Credit</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <label><strong>Amount</strong></label>
+                                    <div>
+                                        <input type="number" class="form-control form-control-sm input-item" name="input[amount]" id="amount" placeholder="Amount" min="0" required>
                                     </div>
                                 </div>
                             </div>
@@ -144,32 +152,19 @@
                                 <thead>
                                     <tr>
                                         <th><input type='checkbox' onchange="checkAll(this, 'dt_id_2')"></th>
-                                        <th>Expense</th>
-                                        <th>Supplier</th>
-                                        <th>Invoice</th>
+                                        <th>Chart</th>
                                         <th>Description</th>
-                                        <th>Amount</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="5" style="text-align:right">Total:</th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--        <div class="modal-footer">
-                <div class='btn-group'>
-                    <button type="button" class="btn btn-primary btn-sm" id="btn_finish">Finish</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>

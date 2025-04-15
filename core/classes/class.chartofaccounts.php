@@ -17,7 +17,7 @@
                 $row['chart_type_name'] = $row['chart_type'] == "M" ? "Main" : "Sub";
                 $row['classification_name'] = $ChartClassification->name($row['chart_class_id']);
 
-                $row['main_chart_name'] = $row['main_chart_id'] == null ? "----" : $this->mainChartName($row['main_chart_id']);
+                $row['main_chart_name'] = $row['main_chart_id'] == null ? "----" : $this->name($row['main_chart_id']);
                 $row['main_chart_id'] = $row['chart_id'];
                 $rows[] = $row;
             }
@@ -76,7 +76,7 @@
             return $result;    
         }
 
-        public function mainChartName($id)
+        public function name($id)
         {
             $row = $this->select($this->table, "chart_name", "$this->pk = '$id'");
             $result = $row->fetch_assoc();
