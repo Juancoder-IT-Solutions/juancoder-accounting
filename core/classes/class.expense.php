@@ -20,6 +20,7 @@ class Expense extends Connection
         $form = array(
             $this->name     => $this->clean($this->inputs[$this->name]),
             'branch_id'     => $this->clean($this->inputs['branch_id']),
+            'supplier_id'     => $this->clean($this->inputs['supplier_id']),
             'remarks'       => $this->inputs['remarks'],
             'expense_date'  => $this->inputs['expense_date'],
             'encoded_by'    => $this->clean($this->inputs['encoded_by']),
@@ -188,6 +189,7 @@ class Expense extends Connection
         $response = [];
         $reference_number = $this->clean($this->inputs['reference_number']);
         $expense_category_code = $this->clean($this->inputs['expense_category_code']);
+        $supplier_id = $this->clean($this->inputs['supplier_id']);
         $this->inputs['expense_date'] = $this->getCurrentDate();
         $this->inputs['status'] = 'S';
         $expense_category_id = $this->clean($this->inputs['expense_category_id']);
@@ -323,6 +325,41 @@ class Expense extends Connection
         } else {
             return -2;
         }
+    }
+
+    public function update_header(){
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $supplier_id = $this->clean($this->inputs['supplier_id']);
+
+        $form = array(
+            'supplier_id' => $supplier_id
+        );
+
+        return $this->update($this->table, $form, "reference_number = '$reference_number' and reference_number != ''");
+    }
+
+    public function get_summary(){
+        $user_id = $this->clean($this->inputs['user_id']);
+        $rows = array();
+
+        $fetch = $this->select("$this->table h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id LEFT JOIN tbl_suppliers s ON h.supplier_id=s.supplier_id LEFT JOIN tbl_expense_category c ON d.expense_category_id=c.expense_category_id", "d.*, h.reference_number, h.date_added as date_added, s.supplier_name, c.expense_category", "h.status='F' AND h.encoded_by='$user_id' AND h.summary_id=0 ORDER BY h.date_added DESC");
+        while($row = $fetch->fetch_assoc()){
+            $row['date_added'] = date("M d, Y h:i A", strtotime($row['date_added']));
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    public function summary_per_sales()
+    {
+        $user_id = $this->inputs['user_id'];
+        $branch_id = $this->inputs['branch_id'];
+        $warehouse_id = $this->inputs['warehouse_id'];
+        
+        $sales_rows['summary_date'] = date('F d, Y', strtotime($this->getCurrentDate()));
+
+        return $sales_rows;
     }
 
     public function graph()
