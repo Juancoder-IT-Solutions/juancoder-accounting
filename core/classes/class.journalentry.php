@@ -2,8 +2,11 @@
     class JournalEntry extends Connection
     {
         private $table = 'tbl_journal_entries';
-        private $table2 = 'tbl_journal_entry_details';
         public $pk = 'journal_entry_id';
+
+        private $table2 = 'tbl_journal_entry_details';
+        public $pk2 = 'journal_entry_detail_id';
+       
         public $inputs = [];
         public $name = 'reference_number';
 
@@ -70,9 +73,27 @@
         public function remove()
         {
             $ids = implode(",", $this->inputs['ids']);
-            
+
             $this->delete($this->table2, "$this->pk IN($ids)");
             return $this->delete($this->table, "$this->pk IN($ids)");
+        }
+
+        public function finish()
+        {
+            $id = $this->inputs['id'];
+            
+            $form = [
+                'status' => 'F',
+            ];
+
+            $result = $this->update($this->table, $form, "$this->pk = '$id'");
+            return $result;
+        }
+
+        public function remove_detail()
+        {
+            $ids = implode(",", $this->inputs['ids']);
+            return $this->delete($this->table2, "$this->pk2 IN($ids)");    
         }
 
         public function generate($journal_code = 'JE')

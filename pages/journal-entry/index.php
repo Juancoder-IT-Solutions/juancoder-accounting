@@ -67,7 +67,7 @@
             },
             {
                 "mRender": function(data, type, row) {
-                    return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails("+row.journal_entry_id+ ")' style='padding:15px';height='45px;'><span class='ti ti-pencil'></span></button></div>";
+                    return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails2("+row.journal_entry_id+ ")' style='padding:15px';height='45px;'><span class='ti ti-menu'></span></button></div>";
                 }
             },
             {
@@ -83,7 +83,9 @@
                 "data": "branch"
             },
             {
-                "data": "status"
+                "mRender": function(data, type, row) {
+                    return row.status == 'F' ? "<span class='badge badge-success'>Finish</span>" : "<span class='badge badge-warning'>Saved</span>";
+                }
             },
             {
                 "data": "date_added"

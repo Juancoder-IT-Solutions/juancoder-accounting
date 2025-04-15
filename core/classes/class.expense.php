@@ -14,6 +14,7 @@ class Expense extends Connection
     public $inputs = [];
     public $searchable = ['reference_number', 'remarks'];
     public $uri = "expense";
+    
     public function add()
     {
         $form = array(
@@ -21,8 +22,8 @@ class Expense extends Connection
             'branch_id'     => $this->getBranch(),
             'remarks'       => $this->inputs['remarks'],
             'expense_date'  => $this->inputs['expense_date'],
-            // 'encoded_by'    => $_SESSION['user']['id'],
-            'date_added'    => $this->getCurrentDate()
+            'supplier_id' => $this->inputs['supplier_id'],
+            'user_id'       => $_SESSION['user']['id'],
         );
 
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
@@ -46,7 +47,8 @@ class Expense extends Connection
         $Users = new Users;
         $result = $this->select($this->table, '*', $param);
         while ($row = $result->fetch_assoc()) {
-            $row['encoded_name'] = $Users->getUser($row['encoded_by']);
+            $row['encoded_by'] = $Users->getUser($row['user_id']);
+            $row['supplier_name'] = Suppliers::name($row['supplier_id']);
             $row['total'] = number_format($this->total($row['expense_id']), 2);
             $row['date_last_modified'] = date('Y-m-d H:i:s', strtotime($row['date_last_modified'] . ' + 8 hours'));
             $rows[] = $row;

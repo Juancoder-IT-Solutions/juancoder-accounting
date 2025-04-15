@@ -52,10 +52,13 @@
                                     <th>Date</th>
                                     <th>Reference</th>
                                     <th>Total</th>
-                                    <th>Encoded by</th>
+                                    <th>Supplier</th>
                                     <th>Status</th>
+                                    <th>Encoded by</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
+
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,9 +100,7 @@
             {
                 "mRender": function(data, type, row) {
                     return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails2(" + row.expense_id + ")' style='padding:15px';height='45px;'><span class='ti ti-menu'></span></button><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
-                }
-
-                
+                }                
             },
             {
                 "data": "expense_date"
@@ -108,22 +109,25 @@
                 "data": "reference_number"
             },
             {
+                "data": "supplier_name"
+            },
+            {
                 "data": "total"
             },
             {
-                "data": "encoded_name"
+                "mRender": function(data, type, row) {
+                    return row.status == 'F' ? "<span class='badge badge-success'>Finish</span>" : "<span class='badge badge-warning'>Saved</span>";
+                }
             },
             {
-                "mRender": function(data, type, row) {
-                    return row.status == 'F' ? "<span class='badge badge-success'>Finish</span>" : "<span class='badge badge-danger'>Saved</span>";
-                }
+                "data": "encoded_by"
             },
             {
                 "data": "date_added"
             },
             {
                 "data": "date_last_modified"
-            }
+            },
             ]
         });
     }

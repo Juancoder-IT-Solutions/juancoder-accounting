@@ -92,11 +92,6 @@ class Suppliers extends Connection
         return $row[$self->name];
     }
 
-    public static function balance($primary_id){
-        
-        
-
-    }
 
     public static function search($words,&$rows)
     {
