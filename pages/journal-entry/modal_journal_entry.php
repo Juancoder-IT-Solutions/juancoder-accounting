@@ -1,55 +1,58 @@
-<form method='POST' id='frm_submit' class="users">
-    <div class="modal fade" id="modalEntry" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" style="margin-top: 50px;" role="document">
+<form method='POST' id='frm_submit' class="journalentry">
+    <div class="modal fade" id="modalEntry" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document" style="width: 50%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="modalLabel"><span class='fa fa-pen'></span> Add Entry</h4>
                 </div>
-                <div class="modal-body" style="padding: 15px;">
-                    <input type="hidden" id="hidden_id" name="input[expense_id]">
-
+                <div class="modal-body">
+                    <input type="hidden" id="hidden_id" name="input[journal_entry_id]">
                     <div class="form-group row">
                         <div class="col">
-                            <label><strong>Reference</strong></label>
+                            <label><strong>Journal</strong></label>
                             <div>
-                                <input type="text" class="form-control form-control-sm input-item" name="input[reference_number]" maxlength="30" id="reference_number" readonly required>
+                                <select class="form-control input-item select2" name="input[journal_id]" id="journal_id" onchange="generateRef()" required>
+                                    <option value=''>&mdash; Please Select &mdash;</option>
+                                </select>
                             </div>
                         </div>
+
+                        <div class="col">
+                            <label><strong>General Reference</strong></label>
+                            <div>
+                                <input type="text" class="form-control input-item" name="input[reference_number]" id="reference_number" autocomplete="off" placeholder="General Reference" required readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <div class="col">
                             <label><strong>Date</strong></label>
                             <div>
-                                <input type="date" class="form-control form-control-sm input-item" name="input[expense_date]" id="expense_date" required>
+                                <input type="date" class="form-control input-item" name="input[journal_date]" id="journal_date" autocomplete="off" placeholder="Journal Date" required>
                             </div>
                         </div>
                     </div>
+                    
 
                     <div class="form-group row">
                         <div class="col">
-                            <label><strong>Chart</strong></label>
+                            <label><strong>Cross Reference</strong></label>
                             <div>
-                                <select class="form-control form-control-sm select2" name="input[chart_id]" id="chart_id" required></select>
+                                <input type="text" class="form-control input-item" name="input[cross_reference]" id="cross_reference" autocomplete="off" placeholder="Cross Reference">
                             </div>
                         </div>
                     </div>
 
-                    <div class="form group row">
-                        <div class="col">
-                            <label><strong>Supplier</strong></label>
-                            <div>
-                                <select class="form-control form-control-sm select2" name="input[supplier_id]" id="supplier_id" required></select>
-                            </div>
-                        </div>
-                    </div>
-
-                    
                     <div class="form-group row">
                         <div class="col">
                             <label><strong>Remarks</strong></label>
                             <div>
-                                <textarea class="form-control form-control-sm input-item" name="input[remarks]" id="remarks" placeholder="Remarks" maxlength="255"></textarea>
+                                <textarea class="form-control input-item" name="input[remarks]" id="remarks" autocomplete="off" placeholder="Remarks"></textarea>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <div class='btn-group'>
@@ -62,16 +65,16 @@
     </div>
 </form>
 
-
-<div class="modal fade bd-example-modal-lg" id="modalEntry2" aria-labelledby="myModalLabel">
+<div class="modal fade bd-example-modal-lg" id="modalEntry" aria-labelledby="myModalLabel">
     <div class="modal-dialog  modal-lg" style="margin-top: 50px;" role="document">
         <div class="modal-content">
             <div class="modal-header" style="display:block;">
                 <div class="row" style="font-size: small;">
                     <div class="col-sm-4">
-                        <div><b>Date:</b> <span id="expense_date_label" class="label-item"></span></div>
-                        <div><b>Reference:</b> <span id="reference_number_label" class="label-item"></span></div>
-                        <div><b>Type:</b> <span id="expense_type_name_label" class="label-item"></span></div>
+                        <div><b>General Reference:</b> <span id="general_reference" class="label-item"></span></div>
+                        <div><b>Cross Reference:</b> <span id="cross_reference" class="label-item"></span></div>
+                        <div><b>Branch:</b> <span id="expense_type_name_label" class="label-item"></span></div>
+                        <div><b>Date:</b> <span id="remarks_label" class="label-item"></span></div>
                         <div><b>Remarks:</b> <span id="remarks_label" class="label-item"></span></div>
                     </div>
                     <div class="col-sm-8">
@@ -88,9 +91,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-dismiss="modal" style="font-size: small;"><i class='ti ti-close'></i> Close</a>
                             </li>
-                            <!--<li class="nav-item">
-                                <a class="nav-link disabled" href="#">Disabled</a>
-                            </li>-->
                         </ul>
                     </div>
                 </div>
@@ -99,28 +99,27 @@
                 <div class="row">
                     <div class="col-4" id="col-item">
                         <form method='POST' id='frm_submit_2'>
-                            <input type="hidden" id="hidden_id_2" name="input[expense_id]">
+                            <input type="hidden" id="hidden_id_2" name="input[journal_entry_id]">
 
                             <div class="form-group row">
                                 <div class="col">
-                                    <label><strong>Category</strong></label>
+                                    <label><strong>Chart</strong></label>
                                     <div>
-                                        <select class="form-control form-control-sm select2" name="input[expense_category_id]" id="expense_category_id" required></select>
+                                        <select class="form-control form-control-sm select2" name="input[chart_id]" id="chart_id" required></select>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col">
-                                    <label><strong>Invoice</strong></label>
+                                    <label><strong>Type</strong></label>
                                     <div>
-                                        <input type="text" class="form-control form-control-sm" name="input[invoice_no]" id="invoice_no" maxlength="15">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <label><strong>Amount</strong></label>
-                                    <div>
-                                        <input type="number" class="form-control form-control-sm" name="input[amount]" step=".01" min=0 id="amount" required>
+                                        <input type="text" class="form-control form-control-sm" name="input[type]" id="type" maxlength="15">
+                                        <select class="form-control select2" name="input[type]" id="type" required>
+                                            <option value=''>&mdash; Please Select &mdash;</option>
+                                            <option value='D'>&mdash; Debit &mdash;</option>
+                                            <option value='C'>&mdash; Credit &mdash;</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

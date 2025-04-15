@@ -222,5 +222,7 @@
         getEntries();
         getSelectOption('ExpenseCategories', 'expense_category_id', 'expense_category');
         getSelectOption('Suppliers', 'supplier_id', 'supplier_name');
+
+        getSelectOption('ChartOfAccounts', 'chart_id', 'chart_name');
     });
 </script>

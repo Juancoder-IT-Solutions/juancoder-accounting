@@ -51,5 +51,10 @@
             $ids = implode(",", $this->inputs['ids']);
             return $this->delete($this->table, "$this->pk IN($ids)");
         }
+        public function name($id){
+            $fetch = $this->select($this->table, 'journal_name', "$this->pk = '$id'");
+            $row = $fetch->fetch_assoc();
+            return $row['journal_name'];
+        }
     }
 ?>

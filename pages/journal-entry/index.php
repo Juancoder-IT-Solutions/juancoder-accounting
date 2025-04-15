@@ -31,11 +31,10 @@
                                     <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
                                     <th></th>
                                     <th>General Reference</th>
-                                    <!-- <th>Cross Reference</th>
+                                    <th>Cross Reference</th>
                                     <th>Journal</th>
                                     <th>Branch</th>
-                                    <th>Amount</th>
-                                    <th>Status</th> -->
+                                    <th>Status</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
                                 </tr>
@@ -49,7 +48,7 @@
         </div>
     </div>
 </div>
-<?php include 'modal_chart_of_accounts.php' ?>
+<?php include 'modal_journal_entry.php' ?>
 <script type="text/javascript">
 
     function getEntries() {
@@ -75,6 +74,18 @@
                 "data": "general_reference"
             },
             {
+                "data": "cross_reference"
+            },
+            {
+                "data": "journal"
+            },
+            {
+                "data": "branch"
+            },
+            {
+                "data": "status"
+            },
+            {
                 "data": "date_added"
             },
             {
@@ -84,11 +95,20 @@
         });  
     }
 
+    function generateRef() {
+        var refnum = $("#reference_number").val();
+        var optionSelected = $("#journal_id").find('option:selected').attr('journal_code');
+        var newStr = refnum.split("-");
+
+        $("#reference_number").val(optionSelected+"-"+newStr[1]);
+    }
+
     $(document).ready(function() {
 
         getEntries();
-
-        // getSelectOption('ChartClassification', 'chart_class_id', 'chart_class_name');
+        // getSelectOption('Branches', 'branch_id_entry', 'branch_name');
+        getSelectOption('Journals', 'journal_id', 'journal_name', '', ['journal_code']);
+        
         
         // getSelectOption('ChartOfAccounts', 'main_chart_id', "chart_name", "chart_type = 'M'", ['chart_name']);
     });

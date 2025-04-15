@@ -53,13 +53,16 @@ class Branches extends Connection
 
     public function show()
     {
+        $param = isset($this->inputs['param']) ? $this->inputs['param'] : null;
         $rows = array();
-        $result = $this->select($this->table);
+        $result = $this->select($this->table, '*', $param);
         while ($row = $result->fetch_assoc()) {
+            $row['branch_id_entry'] = $row['branch_id'];
             $rows[] = $row;
         }
         return $rows;
     }
+
 
     public function select_branch()
     {

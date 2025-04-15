@@ -20,24 +20,24 @@ class Menus extends Connection
                 array('url' => 'employee', 'name' => 'Employee', 'class_name' => 'Employee', 'has_detail' => 0),
                 array('url' => 'employee-category', 'name' => 'Employee Category', 'class_name' => 'EmployeeCategory', 'has_detail' => 0),
             ),
-            // 'transaction' => array(
-            //     array('url' => 'credit-memo', 'name' => 'Credit Memo', 'class_name' => 'CreditMemo', 'has_detail' => 1),
-            //     array('url' => 'debit-memo', 'name' => 'Debit Memo', 'class_name' => 'DebitMemo', 'has_detail' => 1),
-            //     array('url' => 'purchase-order', 'name' => 'Purchase Order Entries', 'class_name' => 'PurchaseOrder', 'has_detail' => 1),
-            //     array('url' => 'purchase-return', 'name' => 'Purchase Order Return', 'class_name' => 'PurchaseReturn', 'has_detail' => 1),
-            //     array('url' => 'sales', 'name' => 'Sales Entries', 'class_name' => 'Sales', 'has_detail' => 1),
-            //     array('url' => 'sales-return', 'name' => 'Sales Return', 'class_name' => 'SalesReturn', 'has_detail' => 1),
-            //     array('url' => 'stock-withdrawal', 'name' => 'Stock Withdrawal', 'class_name' => 'StockWithdrawal', 'has_detail' => 1),
-            //     array('url' => 'customer-payment', 'name' => 'Customer Payment', 'class_name' => 'CustomerPayment', 'has_detail' => 1),
-            //     array('url' => 'supplier-payment', 'name' => 'Supplier Payment', 'class_name' => 'SupplierPayment', 'has_detail' => 1),
-            //     array('url' => 'expense', 'name' => 'Expense', 'class_name' => 'Expense', 'has_detail' => 1),
-            //     array('url' => 'expense-category', 'name' => 'Expense Category', 'class_name' => 'ExpenseCategories', 'has_detail' => 0),
-            //     array('url' => 'job-order', 'name' => 'Job Order', 'class_name' => 'JobOrder', 'has_detail' => 1),
-            //     array('url' => 'product-conversion', 'name' => 'Product Conversion', 'class_name' => 'ProductConversion', 'has_detail' => 1),
-            //     array('url' => 'inventory-adjustment', 'name' => 'Inventory Adjustment', 'class_name' => 'InventoryAdjustment', 'has_detail' => 1),
-            //     array('url' => 'deposit', 'name' => 'Deposit', 'class_name' => 'Deposit', 'has_detail' => 1),
-            //     array('url' => 'stock-transfer', 'name' => 'Stock Transfer', 'class_name' => 'StockTransfer', 'has_detail' => 1),
-            // ),
+            'transaction' => array(
+                array('url' => 'credit-memo', 'name' => 'Credit Memo', 'class_name' => 'CreditMemo', 'has_detail' => 1),
+                array('url' => 'debit-memo', 'name' => 'Debit Memo', 'class_name' => 'DebitMemo', 'has_detail' => 1),
+                array('url' => 'purchase-order', 'name' => 'Purchase Order Entries', 'class_name' => 'PurchaseOrder', 'has_detail' => 1),
+                array('url' => 'purchase-return', 'name' => 'Purchase Order Return', 'class_name' => 'PurchaseReturn', 'has_detail' => 1),
+                array('url' => 'sales', 'name' => 'Sales Entries', 'class_name' => 'Sales', 'has_detail' => 1),
+                array('url' => 'sales-return', 'name' => 'Sales Return', 'class_name' => 'SalesReturn', 'has_detail' => 1),
+                array('url' => 'stock-withdrawal', 'name' => 'Stock Withdrawal', 'class_name' => 'StockWithdrawal', 'has_detail' => 1),
+                array('url' => 'customer-payment', 'name' => 'Customer Payment', 'class_name' => 'CustomerPayment', 'has_detail' => 1),
+                array('url' => 'supplier-payment', 'name' => 'Supplier Payment', 'class_name' => 'SupplierPayment', 'has_detail' => 1),
+                array('url' => 'expense', 'name' => 'Expense', 'class_name' => 'Expense', 'has_detail' => 1),
+                array('url' => 'expense-category', 'name' => 'Expense Category', 'class_name' => 'ExpenseCategories', 'has_detail' => 0),
+                array('url' => 'job-order', 'name' => 'Job Order', 'class_name' => 'JobOrder', 'has_detail' => 1),
+                array('url' => 'product-conversion', 'name' => 'Product Conversion', 'class_name' => 'ProductConversion', 'has_detail' => 1),
+                array('url' => 'inventory-adjustment', 'name' => 'Inventory Adjustment', 'class_name' => 'InventoryAdjustment', 'has_detail' => 1),
+                array('url' => 'deposit', 'name' => 'Deposit', 'class_name' => 'Deposit', 'has_detail' => 1),
+                array('url' => 'stock-transfer', 'name' => 'Stock Transfer', 'class_name' => 'StockTransfer', 'has_detail' => 1),
+            ),
             'report' => array(
 
                 array('url' => 'bank-ledger', 'name' => 'Bank Ledger', 'class_name' => 'BankLedger', 'has_detail' => 0),
@@ -82,7 +82,7 @@ class Menus extends Connection
     public function routes($page, $dir)
     {
         $this->lists();
-        $levels = ['master-data', 'accounting', 'report', 'admin', 'user'];
+        $levels = ['master-data', 'transaction', 'accounting', 'report', 'admin', 'user'];
 
         if ($page == 'homepage' || $page == 'profile') {
             $this->dir = $dir;

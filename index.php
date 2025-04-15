@@ -592,29 +592,29 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
             var jsonParse = JSON.parse(data);
             const json = jsonParse.data;
 
-            if (json.payment_type == "H") {
-              $("#div_label_check").show();
-            } else {
-              $("#div_label_check").hide();
-            }
+            // if (json.payment_type == "H") {
+            //   $("#div_label_check").show();
+            // } else {
+            //   $("#div_label_check").hide();
+            // }
 
-            if (route_settings.class_name == "Sales") {
-              if (json['for_pick_up'] == 1) {
-                $("#for_pick_up_label").show();
-                $("#for_pick_up").prop("checked", true);
-                for_pick_up = 1;
-              } else {
-                $("#for_pick_up_label").hide();
-                $("#for_pick_up").prop("checked", false);
-                for_pick_up = 0;
-              }
-            } else if (route_settings.class_name == "Deposit") {
-              depositType(json['deposit_type']);
-            } else if (route_settings.class_name == "StockTransfer") {
-              $("#hidden_source_id").val(json.source_warehouse_id);
-            } else if (route_settings.class_name == "JobOrder") {
-              $("#hidden_warehouse_id").val(json.warehouse_id);
-            }
+            // if (route_settings.class_name == "Sales") {
+            //   if (json['for_pick_up'] == 1) {
+            //     $("#for_pick_up_label").show();
+            //     $("#for_pick_up").prop("checked", true);
+            //     for_pick_up = 1;
+            //   } else {
+            //     $("#for_pick_up_label").hide();
+            //     $("#for_pick_up").prop("checked", false);
+            //     for_pick_up = 0;
+            //   }
+            // } else if (route_settings.class_name == "Deposit") {
+            //   depositType(json['deposit_type']);
+            // } else if (route_settings.class_name == "StockTransfer") {
+            //   $("#hidden_source_id").val(json.source_warehouse_id);
+            // } else if (route_settings.class_name == "JobOrder") {
+            //   $("#hidden_warehouse_id").val(json.warehouse_id);
+            // }
 
             $('.label-item').map(function() {
               const id_name = this.id;
