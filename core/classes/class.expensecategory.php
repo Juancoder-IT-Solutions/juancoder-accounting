@@ -77,6 +77,21 @@ class ExpenseCategories extends Connection
         
     }
 
+    public function pos_show()
+    {
+        $branch_id = $this->clean($this->inputs['branch_id']);
+        $warehouse_id = $this->clean($this->inputs['warehouse_id']);
+
+        $rows = array();
+        $result = $this->select($this->table, '*', "expense_category_id > 0 ORDER BY expense_category ASC");
+        $count = 1;
+        while ($row = $result->fetch_assoc()) {
+            $row['count'] = $count++;
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
     public static function search($words,&$rows)
     {
         $self = new self;

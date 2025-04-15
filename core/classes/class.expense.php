@@ -19,11 +19,12 @@ class Expense extends Connection
     {
         $form = array(
             $this->name     => $this->clean($this->inputs[$this->name]),
-            'branch_id'     => $this->getBranch(),
+            'branch_id'     => $this->clean($this->inputs['branch_id']),
+            'supplier_id'   => $this->clean($this->inputs['supplier_id']),
             'remarks'       => $this->inputs['remarks'],
             'expense_date'  => $this->inputs['expense_date'],
-            'supplier_id' => $this->inputs['supplier_id'],
-            'user_id'       => $_SESSION['user']['id'],
+            'supplier_id'   => $this->inputs['supplier_id'],
+            'encoded_by'       => $_SESSION['user']['id'],
         );
 
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
@@ -167,6 +168,200 @@ class Expense extends Connection
         $row = $fetchData->fetch_assoc();
 
         return $row['total'];
+    }
+
+    public function getDetailsPOS()
+    {
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $rows = array();
+        $result = $this->select("tbl_expense h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id LEFT JOIN tbl_expense_category c ON c.expense_category_id=d.expense_category_id", 'h.*, d.*, c.expense_category', "h.reference_number='$reference_number'");
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+    public function edit_detail(){
+        $expense_detail_id = $this->clean($this->inputs['expense_detail_id']);
+        $amount = $this->clean($this->inputs['amount']);
+        return $this->update($this->table_detail, ['amount' => $amount], "expense_detail_id='$expense_detail_id'");
+    }
+
+    public function addEntryPOS(){
+        $response = [];
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $expense_category_code = $this->clean($this->inputs['expense_category_code']);
+        $supplier_id = $this->clean($this->inputs['supplier_id']);
+        $this->inputs['expense_date'] = $this->getCurrentDate();
+        $this->inputs['status'] = 'S';
+        $expense_category_id = $this->clean($this->inputs['expense_category_id']);
+
+        if ($expense_category_id == "" || $expense_category_id <= 0) {
+            $fetch = $this->select("tbl_expense_category", "expense_category_id", "expense_category_code='$expense_category_code'");
+            $row = $fetch->fetch_assoc();
+            $this->inputs['expense_category_id'] = $row['expense_category_id'];
+        }
+
+        if($this->inputs['expense_category_id'] > 0){
+            $expense_id = $this->add();
+
+            if ($expense_id == -2) {
+                $fetch = $this->select($this->table, "*", "reference_number='$reference_number'");
+                $row = $fetch->fetch_assoc();
+                $expense_id = $row['expense_id'];
+            }
+
+            // checker for reference num
+            if ($reference_number == "") {
+                $reference_number = sprintf("%'.06d", $expense_id);
+                $form = array(
+                    'reference_number' => $reference_number
+                );
+                $this->update($this->table, $form, "$this->pk = '$expense_id'");
+            }
+
+            $this->inputs[$this->pk] = $expense_id;
+            $primary_id = $expense_id;
+            $expense_category_id     = $this->inputs['expense_category_id'];
+
+            $form = array(
+                $this->pk       => $this->inputs[$this->pk],
+                'expense_category_id'   => $expense_category_id,
+                'amount'      => $this->inputs['amount'],
+            );
+            
+            $res = $this->insertIfNotExist($this->table_detail, $form, "expense_id='$primary_id' AND expense_category_id='$expense_category_id'", 'Y');
+
+            $response['response_code'] = 1;
+            $response['response_reference_num'] = $reference_number;
+            return $response;
+        }else{
+            $response['response_code'] = 0;
+            $response['response_reference_num'] = "";
+            return $response;
+        }
+    }
+
+    public function save_entry()
+    {
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $total_amount = $this->get_total_amount();
+        
+        $form = array(
+            'status' => 'P',
+            'total_amount' => $total_amount
+        );
+
+        return $this->update($this->table, $form, "reference_number='$reference_number' and reference_number != ''");
+    }
+
+    public function finish_entry(){
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $encoded_by = $this->clean($this->inputs['encoded_by']);
+        $branch_id = $this->clean($this->inputs['branch_id']);
+        $warehouse_id = $this->clean($this->inputs['warehouse_id']);
+        $total_amount = $this->get_total_amount();
+
+        $form = array(
+            'status' => 'F',
+            'total_amount' => $total_amount,
+            'encoded_by' => $encoded_by,
+            'branch_id' => $branch_id,
+            'warehouse_id' => $warehouse_id
+        );
+
+        return $this->update($this->table, $form, "reference_number='$reference_number' and reference_number != ''");
+
+    }
+
+    public function get_total_amount(){
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $fetch = $this->select("$this->table h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id", "SUM(d.amount) AS total_amount", "reference_number='$reference_number'");
+        $row = $fetch->fetch_assoc();
+
+        return $row['total_amount'] * 1;
+        
+    }
+
+    public function get_pending_entries(){
+        $branch_id = $this->clean($this->inputs['branch_id']);
+        $warehouse_id = $this->clean($this->inputs['warehouse_id']);
+
+        $rows = array();
+        $fetch = $this->select("$this->table e LEFT JOIN tbl_suppliers s ON e.supplier_id=s.supplier_id", "e.*, s.supplier_name", "e.status='P' AND branch_id='$branch_id' ORDER BY e.date_added ASC");
+        while($row = $fetch->fetch_assoc()){
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    public function remove_detail_pos()
+    {
+        $access_code = $this->clean($this->inputs['access_code']);
+        $expense_detail_id = $this->clean($this->inputs['expense_detail_id']);
+
+        $Settings = new Settings();
+        $setting_row = $Settings->view();
+        if ($setting_row['module_delete'] == $access_code) {
+            return $this->delete($this->table_detail, "$this->pk2='$expense_detail_id'");
+        } else {
+            return -2;
+        }
+    }
+
+    public function cancel_entry_pos()
+    {
+
+        $access_code = $this->clean($this->inputs['access_code']);
+        $reference_number = $this->clean($this->inputs['reference_number']);
+
+        $Settings = new Settings();
+        $setting_row = $Settings->view();
+        if ($setting_row['module_cancel'] == $access_code) {
+            $form = array(
+                'status' => 'C'
+            );
+
+            return $this->update($this->table, $form, "reference_number = '$reference_number' and reference_number != ''");
+        } else {
+            return -2;
+        }
+    }
+
+    public function update_header(){
+        $reference_number = $this->clean($this->inputs['reference_number']);
+        $supplier_id = $this->clean($this->inputs['supplier_id']);
+
+        $form = array(
+            'supplier_id' => $supplier_id
+        );
+
+        return $this->update($this->table, $form, "reference_number = '$reference_number' and reference_number != ''");
+    }
+
+    public function get_summary(){
+        $user_id = $this->clean($this->inputs['user_id']);
+        $rows = array();
+
+        $fetch = $this->select("$this->table h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id LEFT JOIN tbl_suppliers s ON h.supplier_id=s.supplier_id LEFT JOIN tbl_expense_category c ON d.expense_category_id=c.expense_category_id", "d.*, h.reference_number, h.date_added as date_added, s.supplier_name, c.expense_category", "h.status='F' AND h.encoded_by='$user_id' AND h.summary_id=0 ORDER BY h.date_added DESC");
+        while($row = $fetch->fetch_assoc()){
+            $row['date_added'] = date("M d, Y h:i A", strtotime($row['date_added']));
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    public function summary_per_sales()
+    {
+        $user_id = $this->inputs['user_id'];
+        $branch_id = $this->inputs['branch_id'];
+        $warehouse_id = $this->inputs['warehouse_id'];
+        
+        $sales_rows['summary_date'] = date('F d, Y', strtotime($this->getCurrentDate()));
+
+        return $sales_rows;
     }
 
     public function graph()

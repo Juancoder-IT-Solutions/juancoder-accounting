@@ -15,12 +15,14 @@ class SalesSummary extends Connection
             return 2;
         } else {
             $form = array(
-                'cashier_id' => $this->inputs['cashier_id'],
-                'starting_balance' => $this->inputs['starting_balance'],
-                'total_sales_amount' => $this->inputs['total_sales_amount'],
-                'total_amount_collected' => $this->inputs['total_amount_collected'],
+                'cashier_id' => $this->clean($this->inputs['cashier_id']),
+                'branch_id' => $this->clean($this->inputs['branch_id']),
+                'warehouse_id' => $this->clean($this->inputs['warehouse_id']),
+                'starting_balance' => $this->clean($this->inputs['starting_balance']),
+                'total_sales_amount' => $this->clean($this->inputs['total_sales_amount']),
+                'total_amount_collected' => $this->clean($this->inputs['total_amount_collected']),
                 'total_deficit' => 0,
-                'encoded_by' => $this->inputs['encoded_by'],
+                'encoded_by' => 0,
                 'status' => 'S',
                 'date_added' => $this->getCurrentDate()
             );
@@ -68,48 +70,29 @@ class SalesSummary extends Connection
 
     public function finish()
     {
-        $row = $this->getLatestSalesSummary();
+        $row = $this->getLatestSummary();
         $primary_id = $row['sales_summary_id'];
-        $starting_balance = $this->inputs['ss_starting_balance'];
-        $total_sales_amount = $this->inputs['ss_total_sales_amount'];
-        $total_sales_amount = $total_sales_amount - $starting_balance;
-        $total_amount_collected = $this->inputs['ss_total_amount_collected'];
-        $total_deficit = $starting_balance + $total_sales_amount - $total_amount_collected;
+        $encoded_by = $this->clean($this->inputs['encoded_by']);
+        $starting_balance = $this->clean($this->inputs['ss_starting_balance']);
+        $total_sales_amount = $this->clean($this->inputs['ss_total_expense_amount']);
+        $total_sales_amount = $starting_balance - $total_sales_amount;
+        $total_amount_collected = $this->clean($this->inputs['ss_total_amount_collected']);
+        $total_deficit = $total_amount_collected - $starting_balance + $total_sales_amount;
 
         $form = array(
             'status' => 'F',
             'encoded_by' => $this->inputs['encoded_by'],
             'total_sales_amount' => $total_sales_amount,
             'total_amount_collected' => $total_amount_collected,
-            'total_deficit' => $total_deficit > 0 ? $total_deficit : 0
+            'total_deficit' => $total_deficit
         );
         $res = $this->update($this->table, $form, "$this->pk = '$primary_id'");
         if($res == 1){
-            $Sales = new Sales();
-            $CustomerPayment = new CustomerPayment;
-            $SalesReturn = new SalesReturn;
-            $RedeemedPoints = new RedeemedPoints;
-            $Sales->inputs['sales_summary_id'] = $primary_id;
-            $Sales->inputs['encoded_by'] = $this->inputs['encoded_by'];
-            $CustomerPayment->inputs['sales_summary_id'] = $primary_id;
-            $CustomerPayment->inputs['encoded_by'] = $this->inputs['encoded_by'];
-            $SalesReturn->inputs['sales_summary_id'] = $primary_id;
-            $SalesReturn->inputs['encoded_by'] = $this->inputs['encoded_by'];
-            $RedeemedPoints->inputs['sales_summary_id'] = $primary_id;
-            $RedeemedPoints->inputs['encoded_by'] = $this->inputs['encoded_by'];
-
-            $CustomerPayment->update_review_sales_summary();
-            $SalesReturn->update_review_sales_summary();
-            $RedeemedPoints->update_review_sales_summary();
-
-            // delete saved sales return
-            $this->delete("tbl_sales_return", "status = 'S' AND encoded_by=" . $this->inputs['encoded_by'] ." ");
-
-            return $Sales->update_review_sales_summary();
+            return $this->update("tbl_expense", ['summary_id' => $primary_id], "summary_id=0 AND encoded_by='$encoded_by'");
         }
     }
 
-    public function getLatestSalesSummary()
+    public function getLatestSummary()
     {
         $cashier_id = $this->inputs['cashier_id'];
         $result = $this->select($this->table, "*", "status='S' AND cashier_id='$cashier_id'");

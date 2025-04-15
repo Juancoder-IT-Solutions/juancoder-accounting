@@ -131,11 +131,17 @@ class Users extends Connection
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            $response['login'] = 'Yes';
-            $response['user_id'] = $row['user_id'];
-            $response['user_category'] = $row['user_category'];
-            $response['user_fullname'] = $row['user_fullname'];
-            //$_SESSION['user']['id'] = $row['user_id'];
+            if($row['branch_id'] > 0 and $row['warehouse_id'] > 0){
+                $response['login'] = 'Yes';
+                $response['user_id'] = $row['user_id'];
+                $response['user_category'] = $row['user_category'];
+                $response['user_fullname'] = $row['user_fullname'];
+                $response['branch_id'] = $row['branch_id'];
+                $response['warehouse_id'] = $row['warehouse_id'];
+            }else{
+                 $response['login'] = 'No branch';
+                 $response['user_id'] = "";
+            }
         } else {
             $response['login'] = 'No';
             $response['user_id'] = "";

@@ -3,7 +3,7 @@
 $request = $_SERVER['REQUEST_URI'];
 
 $base_folder = "pages/";
-$page = str_replace("/pos/", "", $request);
+$page = str_replace("/juancoder-accounting/", "", $request);
 
 // chec if has parameters
 if (substr_count($page, "?") > 0) {
