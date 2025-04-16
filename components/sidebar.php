@@ -6,9 +6,9 @@
 
         // MASTER DATA
         $Menus->sidebar('Dashboard', 'homepage', 'layout-grid2');
-        // $Menus->sidebar('Beginning Balance', 'beginning-balance', 'archive');
+        $Menus->sidebar('Beginning Balance', 'beginning-balance', 'archive');
        
-        $Menus->sidebar('Banks', 'banks', 'wallet');
+        // $Menus->sidebar('Banks', 'banks', 'wallet');
         $Menus->sidebar('Branches', 'branches', 'home');
 
         $Menus->sidebar_parent('Employee','file', array(

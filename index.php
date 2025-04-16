@@ -118,15 +118,15 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
       <!-- page-body-wrapper ends -->
     </div>
     <script type='text/javascript'>
-      <?php
-      echo "var route_settings = " . $route_settings . ";\n";
-      echo "var company_profile = " . $company_profile . ";\n";
-      echo "var app_folder = '" . APP_FOLDER . "';\n";
-      ?>
+      // <?php
+      // echo "var route_settings = " . $route_settings . ";\n";
+      // echo "var company_profile = " . $company_profile . ";\n";
+      // echo "var app_folder = '" . APP_FOLDER . "';\n";
+      // ?>
     </script>
     <script type="text/javascript">
       var modal_detail_status = 0;
-      var current_branch_id = $("#pos_branch_id").val();
+      var current_branch_id = $("#accounting_branch_id").val();
 
       $(document).ready(function() {
         // var branch_id = $("#pos_branch_id").val();
@@ -138,47 +138,52 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
         $(".select2").css({
           "width": "100%"
         });
-        checkPriceNotice();
+        // checkPriceNotice();
+
+        // console.log(current_branch_id);
 
 
         // getBranchesSession();
       });
-
+      
       function AuthBranch() {
         var branch_id = $("#branch_id").val();
-        var current_branch_id = localStorage.getItem("session_branch_id");
-        
-        if(branch_id != current_branch_id){
-          localStorage.setItem("session_branch_id", branch_id);
+        var current_branch_id = localStorage.getItem("session_acc_branch_id");
 
-          $.ajax({
-            type: "POST",
-            url: "controllers/sql.php?c=Branches&q=session_branch",
-            data: {
-              input: {
-                branch_id: branch_id
-              }
-            },
-            success: function(data) {
-              var json = JSON.parse(data);
-              $("#pos_branch_id").val(json.data);
-              swal({
-                    title: "Branch Change",
-                    text: "Session branch updated!",
-                    type: "success",
-                    confirmButtonText: "Ok"
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        location.reload();
-                    }
-                });
-            }
-          });
+        console.log(branch_id + "--" +current_branch_id);
+        if(branch_id != current_branch_id){
+          localStorage.setItem("session_acc_branch_id", branch_id);
         }
+
+        $.ajax({
+          type: "POST",
+          url: "controllers/sql.php?c=Branches&q=session_branch",
+          data: {
+            input: {
+              branch_id: branch_id
+            }
+          },
+          success: function(data) {
+            var json = JSON.parse(data);
+          
+            $("#accounting_branch_id").val(json.data);
+
+            swal({
+                  title: "Branch Change",
+                  text: "Session branch updated!",
+                  type: "success",
+                  confirmButtonText: "Ok"
+              }, function(isConfirm) {
+                  if (isConfirm) {
+                      location.reload();
+                  }
+              });
+          }
+        });
       }
 
       window.addEventListener("storage", function(event) {
-        if (event.key === "session_branch_id") {
+        if (event.key === "session_acc_branch_id") {
             var newBranchId = event.newValue;
 
             if(newBranchId != current_branch_id){
@@ -329,11 +334,11 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
           generateReference(route_settings.class_name);
         }
 
-        if (route_settings.class_name == "PurchaseReturn") {
-          $("#po_reference_number").prop("readonly", false);
-        } else if (route_settings.class_name == "SalesReturn") {
-          $("#sales_reference_number").prop("readonly", false);
-        }
+        // if (route_settings.class_name == "PurchaseReturn") {
+        //   $("#po_reference_number").prop("readonly", false);
+        // } else if (route_settings.class_name == "SalesReturn") {
+        //   $("#sales_reference_number").prop("readonly", false);
+        // }
 
 
         var now = new Date();

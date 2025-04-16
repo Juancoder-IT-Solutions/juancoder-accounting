@@ -64,20 +64,20 @@ class Branches extends Connection
     }
 
 
-    public function select_branch()
-    {
-        $rows = array();
-        $result = $this->select($this->table);
-        while ($row = $result->fetch_assoc()) {
-            $rows[] = $row;
-        }
+    // public function select_branch()
+    // {
+    //     $rows = array();
+    //     $result = $this->select($this->table);
+    //     while ($row = $result->fetch_assoc()) {
+    //         $rows[] = $row;
+    //     }
 
-        // Get the session branch ID
-        $session_branch_id = isset($_SESSION['accounting_branch_id']) ? $_SESSION['accounting_branch_id'] : '';
+    //     // Get the session branch ID
+    //     $session_branch_id = isset($_SESSION['accounting_branch_id']) ? $_SESSION['accounting_branch_id'] : '';
 
-        // Return branch data along with session_branch_id
-        return array('branches' => $rows, 'session_branch_id' => $session_branch_id);
-    }
+    //     // Return branch data along with session_branch_id
+    //     return array('branches' => $rows, 'session_branch_id' => $session_branch_id);
+    // }
 
     public function update_session_branch()
     {
@@ -89,7 +89,7 @@ class Branches extends Connection
 
     public function session_branch(){
         $branch_id = $this->clean($this->inputs['branch_id']);
-       $_SESSION['accounting_branch_id'] = $branch_id;
+        return $_SESSION['accounting_branch_id'] = $branch_id;
     }
 
 
