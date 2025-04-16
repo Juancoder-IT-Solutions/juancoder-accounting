@@ -27,7 +27,7 @@ class Expense extends Connection
             'encoded_by'    => $_SESSION['accounting_user']['id'],
         );
 
-        return $form;//$this->insertIfNotExist($this->table, $form, '', 'Y');
+        $this->insertIfNotExist($this->table, $form, '', 'Y');
     }
 
     public function edit()
