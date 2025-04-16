@@ -19,23 +19,23 @@ class Expense extends Connection
     {
         $form = array(
             $this->name     => $this->clean($this->inputs[$this->name]),
-            'branch_id'     => $this->clean($this->inputs['branch_id']),
+            'branch_id'     => $this->getBranch(),
             'supplier_id'   => $this->clean($this->inputs['supplier_id']),
             'remarks'       => $this->inputs['remarks'],
             'expense_date'  => $this->inputs['expense_date'],
             'supplier_id'   => $this->inputs['supplier_id'],
-            'encoded_by'       => $_SESSION['user']['id'],
+            'encoded_by'    => $_SESSION['accounting_user']['id'],
         );
 
-        return $this->insertIfNotExist($this->table, $form, '', 'Y');
+        return $form;//$this->insertIfNotExist($this->table, $form, '', 'Y');
     }
 
     public function edit()
     {
         $form = array(
-            'remarks'       => $this->inputs['remarks'],
-            'expense_date'  => $this->inputs['expense_date'],
-            'encoded_by'    => $_SESSION['user']['id'],
+            'remarks'               => $this->inputs['remarks'],
+            'expense_date'          => $this->inputs['expense_date'],
+            'encoded_by'            => $_SESSION['accounting_user']['id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         return $this->updateIfNotExist($this->table, $form);

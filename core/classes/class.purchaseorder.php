@@ -27,7 +27,7 @@ class PurchaseOrder extends Connection
             'paid_status'   => ($this->inputs['po_type'] == "C" ? 1 : 0),
             'po_date'       => $this->inputs['po_date'],
             'po_remarks'    => $this->inputs['po_remarks'],
-            'encoded_by'    => $_SESSION['user']['id'],
+            'encoded_by'    => $_SESSION['accounting_user']['id'],
             'date_added'    => $this->getCurrentDate()
         );
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
@@ -57,7 +57,7 @@ class PurchaseOrder extends Connection
             'po_invoice'            => $this->inputs['po_invoice'],
             'po_terms'              => $this->inputs['po_terms'],
             'po_remarks'            => $this->inputs['po_remarks'],
-            'encoded_by'            => $_SESSION['user']['id'],
+            'encoded_by'            => $_SESSION['accounting_user']['id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         return $this->updateIfNotExist($this->table, $form);

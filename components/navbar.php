@@ -27,7 +27,7 @@
                 <!-- <select class="form-control select2" name="input[branch_id]" id="session_branch_id" required>
                 </select> -->
                 <select class="form-control" id="branch_id" name="input[branch_id]" style="width: 250px;" onchange="AuthBranch()"></select>
-                <input type="hidden" id="pos_branch_id" value="<?= $_SESSION['branch_id']; ?>">
+                <input type="hidden" id="pos_branch_id" value="<?= $_SESSION['accounting_branch_id']; ?>">
             </li>
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">

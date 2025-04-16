@@ -39,7 +39,7 @@ class Users extends Connection
                 'username'              => $username,
                 'date_last_modified'    => $this->getCurrentDate()
             );
-            if ($primary_id != $_SESSION['user']['id']) {
+            if ($primary_id != $_SESSION['accounting_user']['id']) {
                 $form['user_category'] = $this->inputs['user_category'];
             }
             return $this->update($this->table, $form, "$this->pk = '$primary_id'");
@@ -111,7 +111,7 @@ class Users extends Connection
             $row = $result->fetch_assoc();
 
             $response['login'] = 'Yes';
-            $_SESSION['user']['id'] = $row['user_id'];
+            $_SESSION['accounting_user']['id'] = $row['user_id'];
             $_SESSION['user']['fullname'] = $row['user_fullname'];
             $_SESSION['user']['category'] = $row['user_category'];
 

@@ -64,7 +64,7 @@
 <script type="text/javascript">
 
     function getEntries() {
-        var branch_id = "<?=$_SESSION['branch_id']?>"
+        var branch_id = "<?=$_SESSION['accounting_branch_id']?>"
         var param = "branch_id = '"+branch_id+"'";
         $("#dt_entries").DataTable().destroy();
         $("#dt_entries").DataTable({

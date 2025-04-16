@@ -7,7 +7,7 @@ class Logs extends Connection
 		$log_filename = $_SERVER['DOCUMENT_ROOT'] . "/" . APP_FOLDER . "/logs";
 		$self = new self;
 
-		$user = $user_id == 0 ? $_SESSION['user']['id'] : $user_id;
+		$user = $user_id == 0 ? $_SESSION['accounting_user']['id'] : $user_id;
 		if ($date == '') {
 			$log_file_data = $log_filename . '/log_' . date('m-Y') . '.log';
 			$datetime = date('Y-m-d H:i:s');

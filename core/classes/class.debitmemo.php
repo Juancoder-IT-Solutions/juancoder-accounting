@@ -17,7 +17,7 @@ class DebitMemo extends Connection
             'memo_type'     => $this->inputs['memo_type'],
             'account_id'    => $this->inputs['account_id'],
             'remarks'       => $this->inputs['remarks'],
-            'encoded_by'    => $_SESSION['user']['id'],
+            'encoded_by'    => $_SESSION['accounting_user']['id'],
             'date_added'    => $this->getCurrentDate()
         );
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
@@ -60,7 +60,7 @@ class DebitMemo extends Connection
         $form = array(
             'memo_date'             => $this->inputs['memo_date'],
             'remarks'               => $this->inputs['remarks'],
-            'encoded_by'            => $_SESSION['user']['id'],
+            'encoded_by'            => $_SESSION['accounting_user']['id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         return $this->updateIfNotExist($this->table, $form);

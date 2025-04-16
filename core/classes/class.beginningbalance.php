@@ -31,7 +31,7 @@ class BeginningBalance extends Connection
                 'bb_qty'        => $this->inputs['bb_qty'],
                 'bb_amount'     => $this->inputs['bb_amount'],
                 'bb_remarks'    => $this->inputs['bb_remarks'],
-                'encoded_by'    => $_SESSION['user']['id'],
+                'encoded_by'    => $_SESSION['accounting_user']['id'],
                 'date_added'    => $this->getCurrentDate()
             );
 
@@ -64,7 +64,7 @@ class BeginningBalance extends Connection
                 'bb_qty'                => $this->inputs['bb_qty'],
                 'bb_amount'             => $this->inputs['bb_amount'],
                 'bb_remarks'            => $this->inputs['bb_remarks'],
-                'encoded_by'            => $_SESSION['user']['id'],
+                'encoded_by'            => $_SESSION['accounting_user']['id'],
                 'date_last_modified'    => $this->getCurrentDate()
             );
             $result = $this->updateIfNotExist($this->table, $form);

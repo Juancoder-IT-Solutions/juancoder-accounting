@@ -88,7 +88,7 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
 </head>
 
 <body class="sidebar-dark">
-  <?php if (!isset($_SESSION['user']['id'])) {
+  <?php if (!isset($_SESSION['accounting_user']['id'])) {
     require_once 'pages/authentication/index.php';
   } else {
     // sidebar-icon-only
@@ -104,7 +104,7 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
         <div class="main-panel">
           <!-- routes -->
           <?php
-          if (isset($_SESSION['branch_id']) && $_SESSION['branch_id'] > 0) {
+          if (isset($_SESSION['accounting_branch_id']) && $_SESSION['accounting_branch_id'] > 0) {
             require 'routes/routes.php';
           } else {
             require 'no_branch.php';

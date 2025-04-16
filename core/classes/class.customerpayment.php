@@ -28,7 +28,7 @@ class CustomerPayment extends Connection
             'check_number'  => $this->inputs['check_number'],
             'check_bank'    => $this->inputs['check_bank'],
             'payment_option_id'     => $this->inputs['payment_option_id'],
-            'encoded_by'            => isset($this->inputs['encoded_by']) ? $this->inputs['encoded_by'] :  $_SESSION['user']['id'],
+            'encoded_by'            => isset($this->inputs['encoded_by']) ? $this->inputs['encoded_by'] :  $_SESSION['accounting_user']['id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         $result = $this->insertIfNotExist($this->table, $form, '', 'Y');
@@ -42,7 +42,7 @@ class CustomerPayment extends Connection
             'payment_type'          => $this->inputs['payment_type'],
             'payment_date'          => $this->inputs['payment_date'],
             'remarks'               => $this->inputs['remarks'],
-            'encoded_by'            => $_SESSION['user']['id'],
+            'encoded_by'            => $_SESSION['accounting_user']['id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         $result = $this->updateIfNotExist($this->table, $form);

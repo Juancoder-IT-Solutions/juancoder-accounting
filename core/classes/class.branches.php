@@ -73,7 +73,7 @@ class Branches extends Connection
         }
 
         // Get the session branch ID
-        $session_branch_id = isset($_SESSION['branch_id']) ? $_SESSION['branch_id'] : '';
+        $session_branch_id = isset($_SESSION['accounting_branch_id']) ? $_SESSION['accounting_branch_id'] : '';
 
         // Return branch data along with session_branch_id
         return array('branches' => $rows, 'session_branch_id' => $session_branch_id);
@@ -83,13 +83,13 @@ class Branches extends Connection
     {
         session_start();
 
-        $_SESSION['branch_id'] = $this->inputs['branch_id'];
-        return $_SESSION['branch_id'];
+        $_SESSION['accounting_branch_id'] = $this->inputs['branch_id'];
+        return $_SESSION['accounting_branch_id'];
     }
 
     public function session_branch(){
         $branch_id = $this->clean($this->inputs['branch_id']);
-       $_SESSION['branch_id'] = $branch_id;
+       $_SESSION['accounting_branch_id'] = $branch_id;
     }
 
 

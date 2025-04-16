@@ -23,7 +23,7 @@ class ProductConversion extends Connection
             'warehouse_id'          => $this->clean($this->inputs['warehouse_id']),
             'remarks'               => $this->clean($this->inputs['remarks']),
             'conversion_date'       => $this->inputs['conversion_date'],
-            'encoded_by'            => $_SESSION['user']['id'],
+            'encoded_by'            => $_SESSION['accounting_user']['id'],
             'date_added'            => $this->getCurrentDate()
         );
         return $this->insert($this->table, $form, 'Y');
@@ -37,7 +37,7 @@ class ProductConversion extends Connection
             'no_of_batches'         => $this->inputs['no_of_batches'],
             'remarks'               => $this->inputs['remarks'],
             'job_order_date'        => $this->inputs['job_order_date'],
-            'encoded_by'            => $_SESSION['user']['id'],
+            'encoded_by'            => $_SESSION['accounting_user']['id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         return $this->updateIfNotExist($this->table, $form);
