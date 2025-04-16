@@ -1,7 +1,7 @@
 <?php
 
-define('APP_FOLDER', 'juancoder-accounting');
-define('BASE_URL', 'http://localhost/' . APP_FOLDER . '/');
+define('APP_FOLDER', 'accounting');
+define('BASE_URL', 'https://qlpascorp.com/' . APP_FOLDER . '/');
 define("BASE_PATH", __DIR__ . "/../");
 define('DEVELOPMENT', true);
 
