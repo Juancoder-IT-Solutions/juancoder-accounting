@@ -2,7 +2,7 @@
 
 $pre_class = "classes/class.";
 $classes = array(
-    'CashAdditionals'       => $pre_class . 'CashAdditionals.php',
+    'CashAdditionals'       => $pre_class . 'cashadditionals.php',
     'Connection'            => $pre_class . 'connection.php',
     'Customers'             => $pre_class . 'customers.php',
     'CustomerSOA'           => $pre_class . 'customersoa.php',
