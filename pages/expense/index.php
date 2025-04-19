@@ -33,9 +33,9 @@
                                 <button type="button" class="btn btn-warning btn-icon-text" onclick="getEntries()">
                                     <i class="ti-reload mr-1"></i> Generate Entry
                                 </button>  
-                                <button type="button" class="btn btn-primary btn-icon-text" onclick="addModal()">
+                                <!-- <button type="button" class="btn btn-primary btn-icon-text" onclick="addModal()">
                                     <i class="ti-plus mr-1"></i> Add Entry
-                                </button>
+                                </button> -->
                                 <button type="button" class="btn btn-danger btn-icon-text" onclick="deleteEntry()" id="btn_delete">
                                     <i class="ti-trash mr-1"></i> Delete Entry
                                 </button>

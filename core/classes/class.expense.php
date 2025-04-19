@@ -9,7 +9,7 @@ class Expense extends Connection
     public $pk2 = 'expense_detail_id';
     public $fk_det = 'expense_category_id';
 
-    public $module = 'EXP-';
+    public $module = 'EXP';
     public $module_name = "Expense";
     public $inputs = [];
     public $searchable = ['reference_number', 'remarks'];
