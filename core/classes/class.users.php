@@ -127,7 +127,7 @@ class Users extends Connection
         $response = [];
         $username = $this->clean($this->inputs['username']);
         $password = md5($this->clean($this->inputs['password']));
-        $result = $this->select($this->table, '*', "username = '$username' AND password = '$password' AND (user_category='C' or user_category='W')");
+        $result = $this->select($this->table, '*', "username = '$username' AND password = '$password' AND user_category='C'");
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
