@@ -442,6 +442,14 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
                 $("#div_category").show();
                 $("#user_category").prop("required", true);
               }
+
+              if (json['user_category'] == "C") {
+                $("#div_warehouse").show();
+                $("#warehouse_id").prop("required", true);
+              } else {
+                $("#div_warehouse").hide();
+                $("#warehouse_id").prop("required", false);
+              }
             }
             $("#modalLabel").html("<span class='fa fa-pen'></span> Update Entry");
             $("#modalEntry").modal('show');

@@ -21,6 +21,7 @@ class Menus extends Connection
                 array('url' => 'employee-category', 'name' => 'Employee Category', 'class_name' => 'EmployeeCategory', 'has_detail' => 0),
             ),
             'transaction' => array(
+                array('url' => 'cash-additionals', 'name' => 'Cash Additionals', 'class_name' => 'CashAdditionals', 'has_detail' => 1),
                 array('url' => 'credit-memo', 'name' => 'Credit Memo', 'class_name' => 'CreditMemo', 'has_detail' => 1),
                 array('url' => 'debit-memo', 'name' => 'Debit Memo', 'class_name' => 'DebitMemo', 'has_detail' => 1),
                 array('url' => 'purchase-order', 'name' => 'Purchase Order Entries', 'class_name' => 'PurchaseOrder', 'has_detail' => 1),
