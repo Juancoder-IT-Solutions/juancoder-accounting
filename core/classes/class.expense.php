@@ -358,8 +358,13 @@ class Expense extends Connection
         $user_id = $this->inputs['user_id'];
         $branch_id = $this->inputs['branch_id'];
         $warehouse_id = $this->inputs['warehouse_id'];
+
+        // total cash additionals
+        $fetch_additionals = $this->select("tbl_cash_additionals", "sum(amount) as total", "cashier_id='$user_id' AND branch_id='$branch_id' AND warehouse_id='$warehouse_id' AND status='F' AND summary_id=0");
+        $additionals_row = $fetch_additionals->fetch_assoc();
         
         $sales_rows['summary_date'] = date('F d, Y', strtotime($this->getCurrentDate()));
+        $sales_rows['total_cash_additionals'] = $additionals_row['total'];
 
         return $sales_rows;
     }
