@@ -19,7 +19,7 @@
         $Menus->sidebar('Suppliers', 'suppliers', 'truck');
 
         $Menus->sidebar_parent('Expense', 'money', array(
-            array('Entries', 'expense'),
+            // array('Entries', 'expense'),
             array('Categories', 'expense-category'),
         ));
         // $Menus->sidebar('Deposit', 'deposit', 'credit-card');

@@ -88,8 +88,23 @@ class Suppliers extends Connection
     {
         $self = new self;
         $result = $self->select($self->table, $self->name, "$self->pk  = '$primary_id'");
+        if ($result->num_rows == 0) {
+            return null;
+        } 
         $row = $result->fetch_assoc();
         return $row[$self->name];
+    }
+
+    public static function total()
+    {
+        $self = new self;
+        $result = $self->select($self->table, "count($self->pk) as total");
+        if ($result->num_rows == 0) {
+            return 0;
+        }else{
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
     }
 
 

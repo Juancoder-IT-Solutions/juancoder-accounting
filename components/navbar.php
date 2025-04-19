@@ -9,7 +9,7 @@
             <span class="icon-menu"></span>
         </button>
         <ul class="navbar-nav mr-lg-2">
-            <li class="nav-item nav-search d-none d-lg-block">
+            <!-- <li class="nav-item nav-search d-none d-lg-block">
                 <form method="POST" id="frm_search">
                     <div class="input-group">
                         <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
@@ -20,7 +20,7 @@
                         <input type="text" minlength="5" required name="input[words]" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
                     </div>
                 </form>
-            </li>
+            </li> -->
         </ul>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown">

@@ -48,7 +48,7 @@ class Expense extends Connection
         $Users = new Users;
         $result = $this->select($this->table, '*', $param);
         while ($row = $result->fetch_assoc()) {
-            $row['encoded_by'] = $Users->getUser($row['user_id']);
+            $row['encoded_by'] = $Users->getUser($row['encoded_by']);
             $row['supplier_name'] = Suppliers::name($row['supplier_id']);
             $row['total'] = number_format($this->total($row['expense_id']), 2);
             $row['date_last_modified'] = date('Y-m-d H:i:s', strtotime($row['date_last_modified'] . ' + 8 hours'));
@@ -507,5 +507,23 @@ class Expense extends Connection
             )
         );
         return $this->schemaCreator($tables);
+    }
+
+    public function top_expenses()
+    {
+
+        $branch_id = $this->getBranch();
+        $rows = array();
+        $result = $this->select('tbl_expense_details d LEFT JOIN tbl_expense h ON d.expense_id=h.expense_id LEFT JOIN tbl_expense_category c ON d.expense_category_id=c.expense_category_id', "SUM(amount) AS amount, c.expense_category ", "h.expense_id = d.expense_id AND h.status = 'F' AND h.branch_id='$branch_id' ORDER BY amount DESC LIMIT 5;");
+
+        $count = 1;         
+        while ($row = $result->fetch_assoc()) {
+            $row['count'] = $count++;
+            $row['amount'] = number_format($row['amount'], 2);
+            $row['expense_category'] = $row['expense_category'] == "" ? "Other" : $row['expense_category'];
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 }
