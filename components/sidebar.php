@@ -18,6 +18,8 @@
 
         $Menus->sidebar('Suppliers', 'suppliers', 'truck');
 
+        $Menus->sidebar('Cash Additionals', 'cash-additionals', 'files');
+
         $Menus->sidebar_parent('Expense', 'money', array(
             // array('Entries', 'expense'),
             array('Categories', 'expense-category'),

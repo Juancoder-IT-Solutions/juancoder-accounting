@@ -14,7 +14,7 @@ class Expense extends Connection
     public $inputs = [];
     public $searchable = ['reference_number', 'remarks'];
     public $uri = "expense";
-    
+
     public function add()
     {
         $form = array(
@@ -75,8 +75,12 @@ class Expense extends Connection
 
     public function generate()
     {
-        return $this->module  . date('YmdHis');
+        $fetch = $this->select($this->table, "max($this->pk) as max_id", "$this->pk > 0");
+        $row = $fetch->fetch_assoc();
+        $next_id = (int)$row['max_id'] + 1;
+        return $this->module."-".sprintf("%'.06d", $next_id);
     }
+
 
     public function finish()
     {
@@ -154,7 +158,7 @@ class Expense extends Connection
 
     public function totalExpensesDays($days)
     {
-        
+
         $branch_id = $this->getBranch();
         $fetchData = $this->select('tbl_expense_details as d, tbl_expense as h', "sum(amount) as total", "h.expense_id = d.expense_id AND h.expense_date BETWEEN NOW() - INTERVAL $days DAY AND NOW() AND h.status='F' AND h.branch_id='$branch_id'");
         $row = $fetchData->fetch_assoc();
@@ -181,13 +185,15 @@ class Expense extends Connection
         return $rows;
     }
 
-    public function edit_detail(){
+    public function edit_detail()
+    {
         $expense_detail_id = $this->clean($this->inputs['expense_detail_id']);
         $amount = $this->clean($this->inputs['amount']);
         return $this->update($this->table_detail, ['amount' => $amount], "expense_detail_id='$expense_detail_id'");
     }
 
-    public function addEntryPOS(){
+    public function addEntryPOS()
+    {
         $response = [];
         $reference_number = $this->clean($this->inputs['reference_number']);
         $expense_category_code = $this->clean($this->inputs['expense_category_code']);
@@ -202,7 +208,7 @@ class Expense extends Connection
             $this->inputs['expense_category_id'] = $row['expense_category_id'];
         }
 
-        if($this->inputs['expense_category_id'] > 0){
+        if ($this->inputs['expense_category_id'] > 0) {
             $expense_id = $this->add();
 
             if ($expense_id == -2) {
@@ -229,13 +235,13 @@ class Expense extends Connection
                 'expense_category_id'   => $expense_category_id,
                 'amount'      => $this->inputs['amount'],
             );
-            
+
             $res = $this->insertIfNotExist($this->table_detail, $form, "expense_id='$primary_id' AND expense_category_id='$expense_category_id'", 'Y');
 
             $response['response_code'] = 1;
             $response['response_reference_num'] = $reference_number;
             return $response;
-        }else{
+        } else {
             $response['response_code'] = 0;
             $response['response_reference_num'] = "";
             return $response;
@@ -246,7 +252,7 @@ class Expense extends Connection
     {
         $reference_number = $this->clean($this->inputs['reference_number']);
         $total_amount = $this->get_total_amount();
-        
+
         $form = array(
             'status' => 'P',
             'total_amount' => $total_amount
@@ -255,7 +261,8 @@ class Expense extends Connection
         return $this->update($this->table, $form, "reference_number='$reference_number' and reference_number != ''");
     }
 
-    public function finish_entry(){
+    public function finish_entry()
+    {
         $reference_number = $this->clean($this->inputs['reference_number']);
         $encoded_by = $this->clean($this->inputs['encoded_by']);
         $branch_id = $this->clean($this->inputs['branch_id']);
@@ -271,25 +278,25 @@ class Expense extends Connection
         );
 
         return $this->update($this->table, $form, "reference_number='$reference_number' and reference_number != ''");
-
     }
 
-    public function get_total_amount(){
+    public function get_total_amount()
+    {
         $reference_number = $this->clean($this->inputs['reference_number']);
         $fetch = $this->select("$this->table h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id", "SUM(d.amount) AS total_amount", "reference_number='$reference_number'");
         $row = $fetch->fetch_assoc();
 
         return $row['total_amount'] * 1;
-        
     }
 
-    public function get_pending_entries(){
+    public function get_pending_entries()
+    {
         $branch_id = $this->clean($this->inputs['branch_id']);
         $warehouse_id = $this->clean($this->inputs['warehouse_id']);
 
         $rows = array();
         $fetch = $this->select("$this->table e LEFT JOIN tbl_suppliers s ON e.supplier_id=s.supplier_id", "e.*, s.supplier_name", "e.status='P' AND branch_id='$branch_id' ORDER BY e.date_added ASC");
-        while($row = $fetch->fetch_assoc()){
+        while ($row = $fetch->fetch_assoc()) {
             $rows[] = $row;
         }
 
@@ -329,7 +336,8 @@ class Expense extends Connection
         }
     }
 
-    public function update_header(){
+    public function update_header()
+    {
         $reference_number = $this->clean($this->inputs['reference_number']);
         $supplier_id = $this->clean($this->inputs['supplier_id']);
 
@@ -340,12 +348,13 @@ class Expense extends Connection
         return $this->update($this->table, $form, "reference_number = '$reference_number' and reference_number != ''");
     }
 
-    public function get_summary(){
+    public function get_summary()
+    {
         $user_id = $this->clean($this->inputs['user_id']);
         $rows = array();
 
         $fetch = $this->select("$this->table h LEFT JOIN tbl_expense_details d ON h.expense_id=d.expense_id LEFT JOIN tbl_suppliers s ON h.supplier_id=s.supplier_id LEFT JOIN tbl_expense_category c ON d.expense_category_id=c.expense_category_id", "d.*, h.reference_number, h.date_added as date_added, s.supplier_name, c.expense_category", "h.status='F' AND h.encoded_by='$user_id' AND h.summary_id=0 ORDER BY h.date_added DESC");
-        while($row = $fetch->fetch_assoc()){
+        while ($row = $fetch->fetch_assoc()) {
             $row['date_added'] = date("M d, Y h:i A", strtotime($row['date_added']));
             $rows[] = $row;
         }
@@ -362,7 +371,7 @@ class Expense extends Connection
         // total cash additionals
         $fetch_additionals = $this->select("tbl_cash_additionals", "sum(amount) as total", "cashier_id='$user_id' AND branch_id='$branch_id' AND warehouse_id='$warehouse_id' AND status='F' AND summary_id=0");
         $additionals_row = $fetch_additionals->fetch_assoc();
-        
+
         $sales_rows['summary_date'] = date('F d, Y', strtotime($this->getCurrentDate()));
         $sales_rows['total_cash_additionals'] = $additionals_row['total'];
 
@@ -521,7 +530,7 @@ class Expense extends Connection
         $rows = array();
         $result = $this->select('tbl_expense_details d LEFT JOIN tbl_expense h ON d.expense_id=h.expense_id LEFT JOIN tbl_expense_category c ON d.expense_category_id=c.expense_category_id', "SUM(amount) AS amount, c.expense_category ", "h.expense_id = d.expense_id AND h.status = 'F' AND h.branch_id='$branch_id' ORDER BY amount DESC LIMIT 5;");
 
-        $count = 1;         
+        $count = 1;
         while ($row = $result->fetch_assoc()) {
             $row['count'] = $count++;
             $row['amount'] = number_format($row['amount'], 2);
