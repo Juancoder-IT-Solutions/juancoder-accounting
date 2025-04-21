@@ -14,8 +14,9 @@ class ExpenseCategories extends Connection
         $form = array(
             $this->name             => $this->clean($this->inputs[$this->name]),
             'expense_category_code' => $this->inputs['expense_category_code'],
-            'expense_type' => $this->inputs['expense_type'],
-            'date_added'    => $this->getCurrentDate()
+            'expense_type'          => $this->inputs['expense_type'],
+            'chart_id'              => $this->inputs['chart_id'],   
+            'date_added'            => $this->getCurrentDate()
         );
         return $this->insertIfNotExist($this->table, $form);
     }
@@ -26,18 +27,21 @@ class ExpenseCategories extends Connection
             $this->name             => $this->clean($this->inputs[$this->name]),
             'expense_category_code' => $this->inputs['expense_category_code'],
             'expense_type'          => $this->inputs['expense_type'],
+            'chart_id'              => $this->inputs['chart_id'],
             'date_last_modified'    => $this->getCurrentDate()
         );
         return $this->updateIfNotExist($this->table, $form);
     }
 
     public function show()
-    {
+    {   
+        $ChartOfAccounts = new ChartOfAccounts;
         $param = isset($this->inputs['param']) ? $this->inputs['param'] : '';
         $rows = array();
         $result = $this->select($this->table, '*', $param);
         while ($row = $result->fetch_assoc()) {
             $row['expense_type_name'] = $row['expense_type'] == "O" ? "Other Expense" : "Operational Expense";
+            $row['chart_name'] = $ChartOfAccounts->name($row['chart_id']);
             $rows[] = $row;
         }
         return $rows;

@@ -26,6 +26,7 @@
                                     <th></th>
                                     <th>Expense Code</th>
                                     <th>Expense Category</th>
+                                    <th>Chart</th>
                                     <th>Type</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
@@ -67,6 +68,9 @@
                     "data": "expense_category"
                 },
                 {
+                    "data": "chart_name"
+                },
+                {
                     "data": "expense_type_name"
                 },
                 {
@@ -80,5 +84,7 @@
     }
     $(document).ready(function() {
         getEntries();
+
+        getSelectOption('ChartOfAccounts', 'chart_id', 'chart_name');
     });
 </script>

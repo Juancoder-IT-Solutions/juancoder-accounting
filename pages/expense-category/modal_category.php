@@ -25,6 +25,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <div class="col">
+                            <label><strong>Chart</strong></label>
+                            <div>
+                                <select class="form-control input-item select2" name="input[chart_id]" id="chart_id" required>
+                                    <option value=''>&mdash; Please Select &mdash;</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="form-group row">
                         <div class="col">
                             <label><strong>Name</strong></label>
