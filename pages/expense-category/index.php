@@ -44,6 +44,8 @@
 <?php include 'modal_category.php' ?>
 <script type="text/javascript">
     function getEntries() {
+
+        // include chart_id int 11 just remove this if done
         $("#dt_entries").DataTable().destroy();
         $("#dt_entries").DataTable({
             "processing": true,
