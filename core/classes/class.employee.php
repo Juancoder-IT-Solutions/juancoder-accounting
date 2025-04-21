@@ -56,5 +56,18 @@ class Employee extends Connection
         $result = $this->select($this->table, "*", "$this->pk = '$primary_id'");
         return $result->fetch_assoc();
     }
+
+    public static function total()
+    {
+        $self = new self;
+        $result = $self->select($self->table, "count($self->pk) as total");
+        if ($result->num_rows == 0) {
+            return 0;
+        }else{
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
+    }
+
     
 }

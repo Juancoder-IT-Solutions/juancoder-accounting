@@ -19,7 +19,7 @@
                         <div class="col">
                             <label><strong>Category</strong></label>
                             <div>
-                                <select class="form-control input-item select2" name="input[user_category]" id="user_category" required>
+                                <select class="form-control input-item select2" name="input[user_category]" id="user_category" onchange="userCategory()" required>
                                     <option value="">&mdash; Please Select &mdash;</option>
                                     <option value="S">Staff</option>
                                     <option value="C">Cashier</option>
@@ -28,6 +28,17 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div id="div_warehouse" class="form-group row">
+                        <div class="col">
+                            <label><strong>Warehouse</strong></label>
+                            <div>
+                                <select class="form-control input-item select2" name="input[warehouse_id]" id="warehouse_id" required>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <div class="col">
                             <label><strong>Username</strong></label>
@@ -44,6 +55,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <div class='btn-group'>

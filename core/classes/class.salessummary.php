@@ -71,24 +71,26 @@ class SalesSummary extends Connection
     public function finish()
     {
         $row = $this->getLatestSummary();
-        $primary_id = $row['sales_summary_id'];
-        $encoded_by = $this->clean($this->inputs['encoded_by']);
+        $primary_id = $row['sales_summary_id'] * 1;
+        $cashier_id = $this->clean($this->inputs['cashier_id']);
         $starting_balance = $this->clean($this->inputs['ss_starting_balance']);
+        $total_cash_additionals = $this->clean($this->inputs['ss_total_cash_additionals']);
         $total_sales_amount = $this->clean($this->inputs['ss_total_expense_amount']);
-        $total_sales_amount = $starting_balance - $total_sales_amount;
+        $total_sales_amount = $starting_balance + $total_cash_additionals - $total_sales_amount;
         $total_amount_collected = $this->clean($this->inputs['ss_total_amount_collected']);
         $total_deficit = $total_amount_collected - $starting_balance + $total_sales_amount;
 
         $form = array(
             'status' => 'F',
-            'encoded_by' => $this->inputs['encoded_by'],
+            'encoded_by' => $cashier_id,
             'total_sales_amount' => $total_sales_amount,
             'total_amount_collected' => $total_amount_collected,
             'total_deficit' => $total_deficit
         );
         $res = $this->update($this->table, $form, "$this->pk = '$primary_id'");
         if($res == 1){
-            return $this->update("tbl_expense", ['summary_id' => $primary_id], "summary_id=0 AND encoded_by='$encoded_by'");
+            $this->update("tbl_cash_additionals", ['summary_id' => $primary_id], "summary_id=0 AND cashier_id='$cashier_id' AND status='F'");
+            return $this->update("tbl_expense", ['summary_id' => $primary_id], "summary_id=0 AND encoded_by='$cashier_id'");
         }
     }
 

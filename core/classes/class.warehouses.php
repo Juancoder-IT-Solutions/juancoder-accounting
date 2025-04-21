@@ -104,16 +104,24 @@ class Warehouses extends Connection
 
     public function name($primary_id)
     {
-        $result = $this->select($this->table, 'warehouse_name', "$this->pk = '$primary_id'");
-        $row = $result->fetch_assoc();
-        return $row['warehouse_name'];
+        $result = $this->select($this->table, $this->name, "$this->pk = '$primary_id'");
+        if ($result->num_rows == 0) {
+            return null; // Return null if no result found
+        }else {
+            $row = $result->fetch_assoc();
+            return $row[$this->name];
+        }
     }
 
     public function warehouse_branch_id($primary_id)
     {
         $result = $this->select($this->table, 'branch_id', "$this->pk = '$primary_id'");
-        $row = $result->fetch_assoc();
-        return $row['branch_id'];
+        if ($result->num_rows == 0) {
+            return 0;
+        }elseif ($result->num_rows > 1) {
+            $row = $result->fetch_assoc();
+            return $row['branch_id'];
+        }
     }
 
     public function schema()
