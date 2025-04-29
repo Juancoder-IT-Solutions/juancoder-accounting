@@ -20,10 +20,10 @@ class Suppliers extends Connection
             return 2;
         } else {
             $form = array(
-                'supplier_name'     => $this->inputs['supplier_name'],
-                'supplier_address'  => $this->inputs['supplier_address'],
-                'contact_number'    => $this->inputs['contact_number'],
-                'remarks'           => $this->inputs['remarks'],
+                'supplier_name'     => $this->clean($this->inputs['supplier_name']),
+                'supplier_address'  => $this->clean($this->inputs['supplier_address']),
+                'contact_number'    => $this->clean($this->inputs['contact_number']),
+                'remarks'           => $this->clean($this->inputs['remarks']),
                 'date_added'        => $this->getCurrentDate()
             );
             $result = $this->insert($this->table, $form);
@@ -65,6 +65,34 @@ class Suppliers extends Connection
         }
 
         return 1; //$this->delete($this->table, "$this->pk IN($ids)");
+    }
+
+    public function add_supplier_pos(){
+        $access_code = $this->clean($this->inputs['access_code']);
+
+        $Settings = new Settings();
+        $setting_row = $Settings->view();
+
+        $access_code = $this->inputs['access_code'];
+
+        if ($setting_row['module_add_customer'] == $access_code) {
+            $supplier_name = $this->clean($this->inputs['supplier_name']);
+            $is_exist = $this->select($this->table, $this->pk, "supplier_name = '$supplier_name'");
+            if ($is_exist->num_rows > 0) {
+                return 2;
+            } else {
+                $form = array(
+                    'supplier_name' => $this->clean($this->inputs['supplier_name']),
+                    'supplier_address' => $this->clean($this->inputs['supplier_address']),
+                    'contact_number' => $this->clean($this->inputs['supplier_contact_number']),
+                    'remarks' => $this->clean($this->inputs['remarks'])
+                );
+                $result = $this->insert($this->table, $form);
+                return $result;
+            }
+        } else {
+            return -2;
+        }
     }
 
     public function show()
