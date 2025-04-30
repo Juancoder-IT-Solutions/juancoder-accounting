@@ -118,11 +118,11 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
       <!-- page-body-wrapper ends -->
     </div>
     <script type='text/javascript'>
-      // <?php
-      // echo "var route_settings = " . $route_settings . ";\n";
-      // echo "var company_profile = " . $company_profile . ";\n";
-      // echo "var app_folder = '" . APP_FOLDER . "';\n";
-      // ?>
+      <?php
+      echo "var route_settings = " . $route_settings . ";\n";
+      echo "var company_profile = " . $company_profile . ";\n";
+      echo "var app_folder = '" . APP_FOLDER . "';\n";
+      ?>
     </script>
     <script type="text/javascript">
       var modal_detail_status = 0;
