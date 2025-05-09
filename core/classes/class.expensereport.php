@@ -5,14 +5,7 @@ class ExpenseReport extends Connection
     {
         $start_date = $this->inputs['start_date'];
         $end_date = $this->inputs['end_date'];
-        $expense_type = $this->inputs['expense_type'];
         $expense_category_id = $this->inputs['expense_category_id'];
-        
-        // if($expense_type >= 0){
-        //     $param = "AND c.expense_type = '$expense_type'";
-        // }else{
-        //     $param = "";
-        // }
 
         if($expense_category_id >= 0){
             $cat_param = "AND c.expense_category_id = '$expense_category_id'";

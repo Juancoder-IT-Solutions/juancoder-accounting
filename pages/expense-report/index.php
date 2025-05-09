@@ -103,7 +103,6 @@
     function getEntries() {
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
-        var expense_type = $("#expense_type").val();
         var expense_category_id = $("#expense_category_id").val();
 
         const d1 = new Date(start_date);
@@ -129,7 +128,6 @@
                     input: {
                         start_date: start_date,
                         end_date: end_date,
-                        expense_type: expense_type,
                         expense_category_id:expense_category_id
                     }
                 },
