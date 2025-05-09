@@ -6,7 +6,7 @@
                     <div class="brand-logo">
                         <center><img src="images/icon.png" alt="logo" style="width: 80px;"></center>
                     </div>
-                    <center><h4>Hello! let's get started</h4>
+                    <center><h4>QL Poultry and Agri Supply - Accounting System</h4>
                     <h6 class="font-weight-light">Sign in to continue.</h6></center>
                     <form class="pt-3" id="frm_submit">
                         <div class="form-group">
