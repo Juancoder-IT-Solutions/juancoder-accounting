@@ -39,6 +39,10 @@
             // array('Statement of Accounts', 'statement-of-accounts'),
         ));
 
+        $Menus->sidebar_parent('Reports', 'file', array(
+            array('Expense Report', 'expense-report'),
+        ));
+
         // ADMIN
         // $Menus->sidebar('Admin Controls', 'admin-controls', 'panel');
         $Menus->sidebar('User Accounts', 'users', 'user');
