@@ -14,7 +14,7 @@ $currentDate = date('Y-m-d H:i:s', strtotime($today) + 28800);
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Juancoder IT Solutions Accounting</title>
+  <title>Juancoder IT Solutions Accounting v1.0.0</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
