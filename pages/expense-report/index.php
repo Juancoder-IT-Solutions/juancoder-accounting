@@ -89,10 +89,11 @@
     $(document).ready(function() {
         getEntries();
         
+        getSelectOption('ExpenseCategories', 'expense_category_id', 'expense_category','','','-1','All')
+
         $("#company_name_label").html(company_profile.company_name);
         $("#company_address_label").html(company_profile.company_address);
 
-        getSelectOption('ExpenseCategories', 'expense_category_id', 'expense_category');
     });
 
     $("#frm_generate").submit(function(e) {
