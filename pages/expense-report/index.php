@@ -55,8 +55,8 @@
                             <h4 class="report-header"><span id="company_name_label"></span></h4>
                             <h6 class="report-header"><span id="company_address_label" style="word-wrap: break-word;"></span></h6>
                             <h6 class="report-header" id="report_date"></h6>
-                            <h6 class="report-header">Type: <span id="type_span"></span></h6>
-                            <h6 class="report-header">Category: <span id="category_span"></span></h6>
+                            <!-- <h6 class="report-header">Type: <span id="type_span"></span></h6>
+                            <h6 class="report-header">Category: <span id="category_span"></span></h6> -->
                         </center>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dt_entries" width="100%" cellspacing="0">
