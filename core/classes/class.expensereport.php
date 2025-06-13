@@ -8,6 +8,7 @@ class ExpenseReport extends Connection
         $start_date = $this->inputs['start_date'];
         $end_date = $this->inputs['end_date'];
         $expense_category_id = $this->inputs['expense_category_id'];
+        $branch_id = $this->getBranch();
 
         if($expense_category_id >= 0){
             $cat_param = "AND d.expense_category_id = '$expense_category_id'";
@@ -30,7 +31,7 @@ class ExpenseReport extends Connection
             "h.status='F' 
             AND (h.expense_date >= '$start_date' 
             AND h.expense_date <= '$end_date')
-            AND h.branch_id = 1 
+            AND h.branch_id = $branch_id 
             $cat_param");
         $rows = array();
         while($row = $result->fetch_assoc()) {
