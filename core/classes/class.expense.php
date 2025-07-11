@@ -137,14 +137,9 @@ class Expense extends Connection
 
     public function getHeader()
     {
-        $Warehouses = new Warehouses;
-        $ExpenseCategories = new ExpenseCategories;
         $id = $_POST['id'];
         $result = $this->select($this->table, "*", "$this->pk='$id'");
         $row = $result->fetch_assoc();
-        $row['warehouse_name'] = $Warehouses->name($row['warehouse_id']);
-        $row['conversion_date'] = date("F j, Y", strtotime($row['conversion_date']));
-        $row['expense_type'] = $ExpenseCategories->expense_type($row['expense_id']);
         $rows[] = $row;
         return $rows;
     }
