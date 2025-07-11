@@ -51,8 +51,8 @@
                                     <th></th>
                                     <th>Date</th>
                                     <th>Reference</th>
-                                    <th>Total</th>
                                     <th>Supplier</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Encoded by</th>
                                     <th>Date Added</th>
