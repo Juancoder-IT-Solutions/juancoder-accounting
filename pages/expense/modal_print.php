@@ -25,8 +25,8 @@
                                  <tr>
                                      <th>EXPENSE</th>
                                      <!-- <th>SUPPLIER</th>
-                                     <th>INVOICE</th> -->
-                                     <th>DESCRIPTION</th>
+                                     <th>INVOICE</th> 
+                                     <th>DESCRIPTION</th> -->
                                      <th>AMOUNT</th>
                                  </tr>
                              </thead>
@@ -96,7 +96,7 @@
                          '<td>' + json.data[i].expense_category + '</td>' +
                         //  '<td>' + json.data[i].supplier + '</td>' +
                         //  '<td>' + json.data[i].invoice_no + '</td>' +
-                         '<td>' + json.data[i].description + '</td>' +
+                        //  '<td>' + json.data[i].description + '</td>' +
                          '<td>' + json.data[i].amount + '</td>' +
                          '</tr>');
                      i++;
