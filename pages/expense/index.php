@@ -97,11 +97,12 @@
                     return row.status == 'F' ? '' : "<input type='checkbox' value=" + row.expense_id + " class='dt_id' style='position: initial; opacity:1;'>";
                 }
             },
-            // {
-            //     "mRender": function(data, type, row) {
-            //         return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails2(" + row.expense_id + ")' style='padding:15px';height='45px;'><span class='ti ti-menu'></span></button><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
-            //     }                
-            // },
+            {
+                "mRender": function(data, type, row) {
+                    // return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails2(" + row.expense_id + ")' style='padding:15px';height='45px;'><span class='ti ti-menu'></span></button><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
+                    return "<div style='display:flex;align-items:center'><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
+                }                
+            },
             {
                 "data": "expense_date"
             },
