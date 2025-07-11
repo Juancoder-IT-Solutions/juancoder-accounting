@@ -140,6 +140,7 @@ class Expense extends Connection
         $id = $_POST['id'];
         $result = $this->select($this->table, "*", "$this->pk='$id'");
         $row = $result->fetch_assoc();
+        $row['supplier_name'] = Suppliers::name($row['supplier_id']);
         $rows[] = $row;
         return $rows;
     }

@@ -17,6 +17,7 @@
                      <strong>Reference Number: </strong><span id="reference_number_span"></span><br>
                      <!-- <strong>Type: </strong><span id="expense_type_span"></span><br> -->
                      <strong>Date: </strong><span id="expense_date_span"></span><br>
+                     <strong>Supplier: </strong><span id="expense_supplier_span"></span><br>
                      <strong>Remarks: </strong><span id="remarks_span"></span>
                      <div class="table-responsive">
                          <table class="table table-bordered mb-0" id="tbl_print_details">
@@ -65,6 +66,7 @@
                  var json = JSON.parse(data);
 
                  $("#reference_number_span").html(json.data[0].reference_number);
+                 $("#expense_supplier_span").html(json.data[0].supplier_name);
                 //  $("#expense_type_span").html(json.data[0].expense_type);
                  $("#expense_date_span").html(json.data[0].expense_date);
                  $("#remarks_span").html(json.data[0].remarks);
@@ -92,8 +94,8 @@
                      console.log(json.data[i]);
                      $("#tb_id").append('<tr>' +
                          '<td>' + json.data[i].expense_category + '</td>' +
-                         '<td>' + json.data[i].supplier + '</td>' +
-                         '<td>' + json.data[i].invoice_no + '</td>' +
+                        //  '<td>' + json.data[i].supplier + '</td>' +
+                        //  '<td>' + json.data[i].invoice_no + '</td>' +
                          '<td>' + json.data[i].description + '</td>' +
                          '<td>' + json.data[i].amount + '</td>' +
                          '</tr>');
