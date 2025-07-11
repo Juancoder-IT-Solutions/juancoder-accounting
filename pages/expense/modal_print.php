@@ -23,8 +23,8 @@
                              <thead>
                                  <tr>
                                      <th>EXPENSE</th>
-                                     <th>SUPPLIER</th>
-                                     <th>INVOICE</th>
+                                     <!-- <th>SUPPLIER</th>
+                                     <th>INVOICE</th> -->
                                      <th>DESCRIPTION</th>
                                      <th>AMOUNT</th>
                                  </tr>
