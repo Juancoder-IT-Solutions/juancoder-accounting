@@ -39,7 +39,7 @@
              <div class="modal-footer">
                  <button type="button" onclick="print_report('print_canvas')" class="btn btn-primary ml-1">
                      <i class="bx bx-check d-block d-sm-none"></i>
-                     <span class="d-none d-sm-block"><span class='ti ti-printer'></span> Printer</span>
+                     <span class="d-none d-sm-block"><span class='ti ti-printer'></span> Print</span>
                  </button>
              </div>
          </div>
@@ -51,8 +51,8 @@
          $("#tb_id").html("");
          $("#modalPrint").modal('show');
 
-        // $("#company_name_label").html(company_profile.company_name);
-        // $("#company_address_label").html(company_profile.company_address);
+        $("#company_name_label").html(company_profile.company_name);
+        $("#company_address_label").html(company_profile.company_address);
 
          $.ajax({
              type: 'POST',

@@ -97,34 +97,7 @@
             </div>
             <div class="modal-body" style="padding: 15px;">
                 <div class="row">
-                    <div class="col-4" id="col-item">
-                        <form method='POST' id='frm_submit_2'>
-                            <input type="hidden" id="hidden_id_2" name="input[expense_id]">
-
-                            <div class="form-group row">
-                                <div class="col">
-                                    <label><strong>Category</strong></label>
-                                    <div>
-                                        <select class="form-control form-control-sm select2" name="input[expense_category_id]" id="expense_category_id" required></select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">
-                                <div class="col">
-                                    <label><strong>Description</strong></label>
-                                    <div>
-                                        <textarea class="form-control form-control-sm input-item" name="input[description]" id="description" placeholder="Description" maxlength="255"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class='btn-group'>
-                                <button type="submit" class="btn btn-primary" id="btn_submit_2">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-8" id="col-list">
+                    <div class="col-12" id="col-list">
                         <div class="table-responsive">
                             <table class="display expandable-table" id="dt_entries_2" width="100%" cellspacing="0">
                                 <thead>
