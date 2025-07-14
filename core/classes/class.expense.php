@@ -205,7 +205,7 @@ class Expense extends Connection
         }
 
         if ($this->inputs['expense_category_id'] > 0) {
-            $expense_id = $this->add();
+            return $expense_id = $this->add();
 
             if ($expense_id == -2) {
                 $fetch = $this->select($this->table, "*", "reference_number='$reference_number'");
