@@ -192,7 +192,7 @@ class Expense extends Connection
     {
         $response = [];
         $reference_number = $this->clean($this->inputs['reference_number']);
-        $expense_category_code = $this->clean($this->inputs['expense_category_code']);
+        return $expense_category_code = $this->clean($this->inputs['expense_category_code']);
         $supplier_id = $this->clean($this->inputs['supplier_id']);
         $this->inputs['expense_date'] = $this->getCurrentDate();
         $this->inputs['status'] = 'S';
@@ -205,7 +205,7 @@ class Expense extends Connection
         }
 
         if ($this->inputs['expense_category_id'] > 0) {
-            return $expense_id = $this->add();
+            $expense_id = $this->add();
 
             if ($expense_id == -2) {
                 $fetch = $this->select($this->table, "*", "reference_number='$reference_number'");
