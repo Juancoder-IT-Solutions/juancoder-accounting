@@ -191,7 +191,6 @@ class Expense extends Connection
     public function addEntryPOS()
     {
         $response = [];
-        return $this->getCurrentDate();
         $reference_number = $this->clean($this->inputs['reference_number']);
         $expense_category_code = $this->clean($this->inputs['expense_category_code']);
         $supplier_id = $this->clean($this->inputs['supplier_id']);
