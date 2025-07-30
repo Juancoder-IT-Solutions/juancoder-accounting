@@ -166,7 +166,7 @@
 
                 // Total over all pages
                 total = api
-                    .column(3)
+                    .column(2)
                     .data()
                     .reduce(function(a, b) {
                         return intVal(a) + intVal(b);
@@ -174,7 +174,7 @@
 
                 // Total over this page
                 pageTotal = api
-                    .column(3, {
+                    .column(2, {
                         page: 'current'
                     })
                     .data()
@@ -183,7 +183,7 @@
                     }, 0);
 
                 // Update footer
-                $(api.column(3).footer()).html(
+                $(api.column(2).footer()).html(
                     "&#x20B1; " + this.fnSettings().fnFormatNumber(parseFloat(parseFloat(total).toFixed(2)))
                 );
             },
@@ -201,9 +201,9 @@
             // {
             //     "data": "invoice_no"
             // },
-            {
-                "data": "description"
-            },
+            // {
+            //     "data": "description"
+            // },
             {
                 "data": "amount"
             },

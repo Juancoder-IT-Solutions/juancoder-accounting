@@ -119,14 +119,14 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <div class="col">
                                     <label><strong>Description</strong></label>
                                     <div>
                                         <textarea class="form-control form-control-sm input-item" name="input[description]" id="description" placeholder="Description" maxlength="255"></textarea>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class='btn-group'>
                                 <button type="submit" class="btn btn-primary" id="btn_submit_2">Submit</button>
@@ -140,7 +140,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Expense</th>
-                                        <th>Description</th>
+                                        <!-- <th>Description</th> -->
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
