@@ -57,8 +57,6 @@
                                     <th>Encoded by</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
-
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,7 +99,8 @@
             },
             {
                 "mRender": function(data, type, row) {
-                    return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails2(" + row.expense_id + ")' style='padding:15px';height='45px;'><span class='ti ti-menu'></span></button><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
+                    // return "<div style='display:flex;align-items:center'><button class='btn btn-primary btn-circle mr-1' onclick='getEntryDetails2(" + row.expense_id + ")' style='padding:15px';height='45px;'><span class='ti ti-menu'></span></button><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
+                    return "<div style='display:flex;align-items:center'><button onclick='printRecord("+ row.expense_id +")' class='btn btn-warning btn-circle' style='padding:15px';height='45px;'><span class='ti ti-printer'></span></button></div>";
                 }                
             },
             {
@@ -196,6 +195,12 @@
             {
                 "data": "expense_category"
             },
+            // {
+            //     "data": "supplier"
+            // },
+            // {
+            //     "data": "invoice_no"
+            // },
             {
                 "data": "description"
             },

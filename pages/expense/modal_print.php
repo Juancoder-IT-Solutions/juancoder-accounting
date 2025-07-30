@@ -17,6 +17,7 @@
                      <strong>Reference Number: </strong><span id="reference_number_span"></span><br>
                      <!-- <strong>Type: </strong><span id="expense_type_span"></span><br> -->
                      <strong>Date: </strong><span id="expense_date_span"></span><br>
+                     <strong>Supplier: </strong><span id="expense_supplier_span"></span><br>
                      <strong>Remarks: </strong><span id="remarks_span"></span>
                      <div class="table-responsive">
                          <table class="table table-bordered mb-0" id="tbl_print_details">
@@ -39,7 +40,7 @@
              <div class="modal-footer">
                  <button type="button" onclick="print_report('print_canvas')" class="btn btn-primary ml-1">
                      <i class="bx bx-check d-block d-sm-none"></i>
-                     <span class="d-none d-sm-block"><span class='ti ti-printer'></span> Printer</span>
+                     <span class="d-none d-sm-block"><span class='ti ti-printer'></span> Print</span>
                  </button>
              </div>
          </div>
@@ -47,11 +48,12 @@
  </div>
  <script type="text/javascript">
      function printRecord(id) {
+        // alert(id);
          $("#tb_id").html("");
          $("#modalPrint").modal('show');
 
-         $("#company_name_label").html(company_profile.company_name);
-         $("#company_address_label").html(company_profile.company_address);
+        $("#company_name_label").html(company_profile.company_name);
+        $("#company_address_label").html(company_profile.company_address);
 
          $.ajax({
              type: 'POST',
@@ -64,6 +66,7 @@
                  var json = JSON.parse(data);
 
                  $("#reference_number_span").html(json.data[0].reference_number);
+                 $("#expense_supplier_span").html(json.data[0].supplier_name);
                 //  $("#expense_type_span").html(json.data[0].expense_type);
                  $("#expense_date_span").html(json.data[0].expense_date);
                  $("#remarks_span").html(json.data[0].remarks);

@@ -138,7 +138,7 @@
                             <table class="display expandable-table" id="dt_entries_2" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th><input type='checkbox' onchange="checkAll(this, 'dt_id_2')"></th>
+                                        <th></th>
                                         <th>Expense</th>
                                         <th>Description</th>
                                         <th>Amount</th>
