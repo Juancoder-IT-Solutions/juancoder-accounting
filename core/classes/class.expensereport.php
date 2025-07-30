@@ -8,13 +8,11 @@ class ExpenseReport extends Connection
         $start_date = $this->inputs['start_date'];
         $end_date = $this->inputs['end_date'];
         $expense_category_id = $this->inputs['expense_category_id'];
+        $supplier_id = $this->inputs['supplier_id'];
         $branch_id = $this->getBranch();
 
-        if($expense_category_id >= 0){
-            $cat_param = "AND d.expense_category_id = '$expense_category_id'";
-        }else{
-            $cat_param = "";
-        }
+        $cat_param = $expense_category_id >= 0? "AND d.expense_category_id = '$expense_category_id'":"";
+        $sup_param = $supplier_id >= 0? "AND h.supplier_id = '$supplier_id'":"";
 
         $Supplier = new Suppliers();
         $ExpenseCategories = new ExpenseCategories();
@@ -32,7 +30,9 @@ class ExpenseReport extends Connection
             AND (h.expense_date >= '$start_date' 
             AND h.expense_date <= '$end_date')
             AND h.branch_id = $branch_id 
-            $cat_param");
+            AND h.supplier_id
+            $cat_param
+            $sup_param");
         $rows = array();
         while($row = $result->fetch_assoc()) {
             
@@ -41,7 +41,7 @@ class ExpenseReport extends Connection
             $row['reference_number'] = $row['reference_number'];
             $row['supplier'] = $Supplier->name($row['supplier_id']);
             $row['amount'] = number_format($row['amount'],2);
-            $row['chart_id'] = $row['chart_id'];
+            // $row['chart_id'] = $row['chart_id'];
                 
             $rows[] = $row;
         }

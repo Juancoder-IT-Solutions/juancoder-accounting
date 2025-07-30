@@ -23,14 +23,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <div class="col">
                             <label><strong>Chart</strong></label>
                             <div>
                                 <select class="form-control form-control-sm select2" name="input[chart_id]" id="chart_id" required></select>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form group row">
                         <div class="col">
@@ -71,7 +71,7 @@
                     <div class="col-sm-4">
                         <div><b>Date:</b> <span id="expense_date_label" class="label-item"></span></div>
                         <div><b>Reference:</b> <span id="reference_number_label" class="label-item"></span></div>
-                        <div><b>Type:</b> <span id="expense_type_name_label" class="label-item"></span></div>
+                        <!-- <div><b>Type:</b> <span id="expense_type_name_label" class="label-item"></span></div> -->
                         <div><b>Remarks:</b> <span id="remarks_label" class="label-item"></span></div>
                     </div>
                     <div class="col-sm-8">
@@ -109,6 +109,15 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <div class="col">
+                                    <label><strong>Amount</strong></label>
+                                    <div>
+                                        <input type="number" class="form-control form-control" name="input[amount]" id="amount" required>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div class="form-group row">
                                 <div class="col">
@@ -131,8 +140,6 @@
                                     <tr>
                                         <th><input type='checkbox' onchange="checkAll(this, 'dt_id_2')"></th>
                                         <th>Expense</th>
-                                        <th>Supplier</th>
-                                        <th>Invoice</th>
                                         <th>Description</th>
                                         <th>Amount</th>
                                     </tr>
@@ -141,7 +148,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="5" style="text-align:right">Total:</th>
+                                        <th colspan="3" style="text-align:right">Total:</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>

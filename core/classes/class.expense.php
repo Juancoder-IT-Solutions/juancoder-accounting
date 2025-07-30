@@ -114,8 +114,8 @@ class Expense extends Connection
         $form = array(
             $this->pk       => $this->inputs[$this->pk],
             $this->fk_det   => $fk_det,
-            'supplier_id'   => $this->inputs['supplier_id'],
-            'invoice_no'    => $this->inputs['invoice_no'],
+            // 'supplier_id'   => $this->inputs['supplier_id'],
+            // 'invoice_no'    => $this->inputs['invoice_no'],
             'amount'        => $this->inputs['amount'],
             'description'   => $this->clean($this->inputs['description']),
         );
@@ -129,7 +129,7 @@ class Expense extends Connection
         $result = $this->select($this->table_detail, '*', $param);
         while ($row = $result->fetch_assoc()) {
             $row['expense_category'] = ExpenseCategories::name($row['expense_category_id']);
-            $row['supplier'] = Suppliers::name($row['supplier_id']);
+            // $row['supplier'] = Suppliers::name($row['supplier_id']);
             $rows[] = $row;
         }
         return $rows;
@@ -143,7 +143,7 @@ class Expense extends Connection
         $result = $this->select($this->table, "*", "$this->pk='$id'");
         $row = $result->fetch_assoc();
         $row['warehouse_name'] = $Warehouses->name($row['warehouse_id']);
-        $row['conversion_date'] = date("F j, Y", strtotime($row['conversion_date']));
+        // $row['conversion_date'] = date("F j, Y", strtotime($row['conversion_date']));
         $row['expense_type'] = $ExpenseCategories->expense_type($row['expense_id']);
         $rows[] = $row;
         return $rows;

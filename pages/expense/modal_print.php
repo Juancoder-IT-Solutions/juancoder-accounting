@@ -23,8 +23,8 @@
                              <thead>
                                  <tr>
                                      <th>EXPENSE</th>
-                                     <th>SUPPLIER</th>
-                                     <th>INVOICE</th>
+                                     <!-- <th>SUPPLIER</th>
+                                     <th>INVOICE</th> -->
                                      <th>DESCRIPTION</th>
                                      <th>AMOUNT</th>
                                  </tr>
@@ -91,8 +91,8 @@
                      console.log(json.data[i]);
                      $("#tb_id").append('<tr>' +
                          '<td>' + json.data[i].expense_category + '</td>' +
-                         '<td>' + json.data[i].supplier + '</td>' +
-                         '<td>' + json.data[i].invoice_no + '</td>' +
+                        //  '<td>' + json.data[i].supplier + '</td>' +
+                        //  '<td>' + json.data[i].invoice_no + '</td>' +
                          '<td>' + json.data[i].description + '</td>' +
                          '<td>' + json.data[i].amount + '</td>' +
                          '</tr>');

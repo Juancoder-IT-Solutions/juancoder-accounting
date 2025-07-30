@@ -51,8 +51,8 @@
                                     <th></th>
                                     <th>Date</th>
                                     <th>Reference</th>
-                                    <th>Total</th>
                                     <th>Supplier</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Encoded by</th>
                                     <th>Date Added</th>
@@ -150,7 +150,7 @@
                 }
             },
             "columnDefs": [{
-                "targets": [2, 3, 4],
+                "targets": [3],
                 "render": $.fn.dataTable.render.number(',', '.', 2, ''),
                 "className": 'dt-body-right'
             }],
@@ -167,7 +167,7 @@
 
                 // Total over all pages
                 total = api
-                    .column(5)
+                    .column(3)
                     .data()
                     .reduce(function(a, b) {
                         return intVal(a) + intVal(b);
@@ -175,7 +175,7 @@
 
                 // Total over this page
                 pageTotal = api
-                    .column(5, {
+                    .column(3, {
                         page: 'current'
                     })
                     .data()
@@ -184,7 +184,7 @@
                     }, 0);
 
                 // Update footer
-                $(api.column(5).footer()).html(
+                $(api.column(3).footer()).html(
                     "&#x20B1; " + this.fnSettings().fnFormatNumber(parseFloat(parseFloat(total).toFixed(2)))
                 );
             },
@@ -195,12 +195,6 @@
             },
             {
                 "data": "expense_category"
-            },
-            {
-                "data": "supplier"
-            },
-            {
-                "data": "invoice_no"
             },
             {
                 "data": "description"

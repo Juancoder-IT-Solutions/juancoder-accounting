@@ -31,7 +31,15 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
+                            <div class="col">
+                                <label><strong>Supplier</strong></label>
+                                <div>
+                                    <select class="form-control form-control select2" name="input[supplier_id]" id="supplier_id">
+                                        <option value="-1">All</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="row mb-3" style="display: flex; justify-content: flex-end;">
                             <label>&nbsp;</label>
@@ -89,7 +97,8 @@
     $(document).ready(function() {
         getEntries();
         
-        getSelectOption('ExpenseCategories', 'expense_category_id', 'expense_category','','','-1','All')
+        getSelectOption('ExpenseCategories', 'expense_category_id', 'expense_category','','','-1','All');
+        getSelectOption('Suppliers', 'supplier_id', 'supplier_name','','','-1','All');
 
         $("#company_name_label").html(company_profile.company_name);
         $("#company_address_label").html(company_profile.company_address);
@@ -105,6 +114,7 @@
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
         var expense_category_id = $("#expense_category_id").val();
+        var supplier_id = $("#supplier_id").val();
 
         const d1 = new Date(start_date);
         let start = d1.toDateString().slice(4);
@@ -129,7 +139,8 @@
                     input: {
                         start_date: start_date,
                         end_date: end_date,
-                        expense_category_id:expense_category_id
+                        expense_category_id:expense_category_id,
+                        supplier_id:supplier_id
                     }
                 },
             },
