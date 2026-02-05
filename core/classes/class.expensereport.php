@@ -29,8 +29,7 @@ class ExpenseReport extends Connection
             "h.status='F' 
             AND (h.expense_date >= '$start_date' 
             AND h.expense_date <= '$end_date')
-            AND h.branch_id = $branch_id 
-            AND h.supplier_id
+            AND h.branch_id = $branch_id
             $cat_param
             $sup_param");
         $rows = array();
