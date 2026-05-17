@@ -190,6 +190,13 @@ class Expense extends Connection
         return $this->update($this->table_detail, ['amount' => $amount], "expense_detail_id='$expense_detail_id'");
     }
 
+    public function edit_remarks()
+    {
+        $expense_detail_id = $this->clean($this->inputs['expense_detail_id']);
+        $remarks = $this->clean($this->inputs['remarks']);
+        return $this->update($this->table_detail, ['description' => $remarks], "expense_detail_id='$expense_detail_id'");
+    }
+
     public function addEntryPOS()
     {
         $response = [];
